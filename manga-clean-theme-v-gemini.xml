@@ -1,0 +1,3200 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html b:version='2' class='v2' expr:dir='data:blog.languageDirection' xmlns='http://www.w3.org/1999/xhtml' xmlns:b='http://www.google.com/2005/gml/b' xmlns:data='http://www.google.com/2005/gml/data' xmlns:expr='http://www.google.com/2005/gml/expr'>
+<head>
+    <meta charset='utf-8'/>
+    <meta content='width=device-width, initial-scale=1, maximum-scale=5' name='viewport'/>
+    <!-- Pastikan Title Sesuai -->
+    <b:if cond='data:blog.pageType == &quot;index&quot;'>
+        <title><data:blog.title/></title>
+    <b:elseif cond='data:blog.pageType == &quot;archive&quot;'/>
+        <title>Archive for <data:blog.pageName/> - <data:blog.title/></title>
+    <b:elseif cond='data:blog.pageType == &quot;item&quot;'/>
+        <title><data:blog.pageName/> - <data:blog.title/></title>
+    <b:else/>
+        <title><data:blog.pageName/> - <data:blog.title/></title>
+    </b:if>
+    <!-- Tambahkan Meta Deskripsi untuk SEO -->
+    <b:include data='blog' name='all-head-content'/>
+    <meta expr:content='data:blog.metaDescription' name='description'/>
+
+    <!-- External resources with preconnect for performance -->
+    <link href='https://cdnjs.cloudflare.com' rel='preconnect'/>
+    <link href='https://fonts.googleapis.com' rel='preconnect'/>
+    <link crossorigin='anonymous' href='https://fonts.gstatic.com' rel='preconnect'/>
+
+    <!-- Font Awesome -->
+    <link crossorigin='anonymous' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css' integrity='sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==' referrerpolicy='no-referrer' rel='stylesheet'/>
+
+    <!-- Google Fonts with display swap for better performance -->
+    <link href='https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&amp;family=Roboto:wght@400;500;700&amp;display=swap' media='print' onload='this.media=&apos;all&apos;' rel='stylesheet'/>
+
+    <!-- TimeAgo Library for relative time display -->
+    <script crossorigin='anonymous' defer='defer' integrity='sha512-SVDh1zH5N9ChofSlNAK43lcNS7lWze6DTVx1JCXH1Tmno+0/1jMpdbR8YDgDUfcUrPp1xyE53G42GFrcM0CMVg==' referrerpolicy='no-referrer' src='https://cdnjs.cloudflare.com/ajax/libs/timeago.js/4.0.2/timeago.min.js'/>
+
+    <b:skin><![CDATA[
+    /* ==================== */
+    /* === GLOBAL RESET === */
+    /* ==================== */
+    *, *::before, *::after {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    /* ====================== */
+    /* === BASE ELEMENTS === */
+    /* ====================== */
+    :root {
+        --primary-color: #4db6ff;
+        --primary-hover: #79c8ff;
+        --dark-bg: #131419;
+        --card-bg: #191c24;
+        --card-bg-secondary: #1a1e25;
+        --border-color: rgba(255, 255, 255, 0.06);
+        --border-color-light: rgba(255, 255, 255, 0.1);
+        --text-primary: #eaeaea;
+        --text-secondary: #c4c4c4;
+        --text-tertiary: #a0a0a0;
+        --heading-color: #fff;
+        --nav-height: 60px;
+        --shadow-sm: 0 3px 10px rgba(0, 0, 0, 0.2);
+        --shadow-md: 0 5px 20px rgba(0, 0, 0, 0.2);
+        --shadow-lg: 0 8px 25px rgba(0, 0, 0, 0.3);
+        --container-width: 1280px;
+        --font-family-primary: 'Poppins', sans-serif;
+        --border-radius-sm: 6px;
+        --border-radius-md: 8px;
+        --border-radius-lg: 10px;
+        --border-radius-xl: 30px;
+        --transition-fast: 0.2s ease;
+        --transition-normal: 0.3s ease;
+    }
+
+    html {
+        scroll-behavior: smooth;
+        font-size: 16px; /* Base font size */
+    }
+
+    body {
+        font-family: var(--font-family-primary);
+        background-color: var(--dark-bg);
+        color: var(--text-primary);
+        padding-top: var(--nav-height);
+        line-height: 1.6;
+        overflow-x: hidden;
+    }
+
+    a {
+        color: var(--primary-color);
+        text-decoration: none;
+        transition: color var(--transition-fast), opacity var(--transition-fast), transform var(--transition-fast);
+    }
+
+    a:hover {
+        color: var(--primary-hover);
+    }
+
+    img {
+        max-width: 100%;
+        height: auto;
+        display: block;
+        border-style: none; /* Remove potential borders */
+    }
+
+    button {
+        font-family: var(--font-family-primary);
+        cursor: pointer;
+        border: none; /* Reset button border */
+        background: none; /* Reset button background */
+    }
+
+    .container {
+        max-width: var(--container-width);
+        margin: 0 auto;
+        padding: 0 20px;
+        width: 100%;
+    }
+
+    /* ===================== */
+    /* === HEADER & NAV === */
+    /* ===================== */
+    #header {
+        background-color: rgba(25, 28, 36, 0.95);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border-bottom: 1px solid var(--border-color-light);
+        padding: 0;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 1000;
+        box-shadow: var(--shadow-md);
+    }
+
+    .container_header {
+        max-width: var(--container-width);
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 20px;
+        height: var(--nav-height);
+    }
+
+    .navbar-brand {
+        font-size: 1.5em;
+        font-weight: 700;
+        color: var(--heading-color);
+        letter-spacing: 0.5px;
+        display: flex;
+        align-items: center;
+        text-decoration: none; /* Ensure no underline */
+    }
+
+    .navbar-brand i {
+        margin-right: 8px;
+        color: var(--primary-color);
+    }
+
+    .navbar-brand:hover {
+        color: var(--heading-color);
+        opacity: 0.9;
+        text-decoration: none; /* Ensure no underline on hover */
+    }
+
+    .navbar-nav {
+        list-style: none;
+        display: flex;
+        gap: 5px; /* Reduce gap slightly */
+    }
+
+    .navbar-nav li a {
+        color: var(--text-secondary);
+        padding: 8px 15px;
+        border-radius: var(--border-radius-sm);
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        transition: all var(--transition-fast);
+        text-decoration: none;
+    }
+
+    .navbar-nav li a:hover,
+    .navbar-nav li a:focus, /* Add focus style */
+    .navbar-nav li.active a {
+        color: var(--heading-color);
+        background-color: rgba(255, 255, 255, 0.1);
+        text-decoration: none;
+    }
+
+    .navbar-nav li.active a {
+        background-color: var(--primary-color);
+        color: var(--heading-color);
+    }
+
+    .navbar-nav .fa, .navbar-nav .fas {
+        margin-right: 8px;
+        width: 1.2em; /* Ensure icons align */
+        text-align: center;
+    }
+
+    /* Mobile Nav Toggle */
+    .mobile-nav-toggle {
+        display: none;
+        background: none;
+        border: none;
+        color: var(--heading-color);
+        font-size: 1.5rem;
+        cursor: pointer;
+        padding: 5px; /* Easier to tap */
+    }
+
+    @media (max-width: 768px) {
+        .mobile-nav-toggle {
+            display: block;
+        }
+
+        .navbar-nav {
+            position: absolute; /* Changed from fixed to absolute relative to header */
+            top: var(--nav-height);
+            left: 0;
+            width: 100%;
+            flex-direction: column;
+            background-color: rgba(25, 28, 36, 0.98);
+            padding: 10px 0;
+            transform: translateY(-100%);
+            opacity: 0;
+            visibility: hidden;
+            transition: transform var(--transition-normal), opacity var(--transition-normal), visibility var(--transition-normal);
+            border-bottom: 1px solid var(--border-color-light);
+            box-shadow: var(--shadow-md);
+            z-index: 999; /* Ensure it's below header */
+        }
+
+        .navbar-nav.active {
+            transform: translateY(0);
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .navbar-nav li {
+            width: 100%;
+        }
+
+        .navbar-nav li a {
+            padding: 12px 20px;
+            border-radius: 0;
+            width: 100%; /* Make link full width */
+        }
+    }
+
+    /* ================= */
+    /* === CARD BASE === */
+    /* ================= */
+    .card {
+        background-color: var(--card-bg);
+        border-radius: var(--border-radius-lg);
+        margin-bottom: 25px;
+        overflow: hidden;
+        box-shadow: var(--shadow-md);
+        border: 1px solid var(--border-color);
+        transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+    }
+
+    .card:hover {
+        transform: translateY(-3px);
+        box-shadow: var(--shadow-lg);
+    }
+
+    .card-header {
+        background: linear-gradient(90deg, #232731, #1e212a);
+        padding: 15px 20px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 15px; /* Add gap between title and link */
+    }
+
+    .card-title {
+        margin: 0;
+        font-size: 1.2em;
+        font-weight: 600;
+        color: var(--heading-color);
+        display: flex;
+        align-items: center;
+        gap: 10px; /* Add gap between icon and text */
+    }
+
+    .card-title .fa, .card-title .fas {
+        /* margin-right: 10px; - Replaced by gap */
+        color: var(--primary-color);
+    }
+
+    .view-more {
+        font-size: 0.85em;
+        color: var(--primary-color);
+        display: flex;
+        align-items: center;
+        white-space: nowrap; /* Prevent wrapping */
+        text-decoration: none;
+    }
+
+    .view-more i {
+        margin-left: 5px;
+        transition: transform var(--transition-fast);
+    }
+
+    .view-more:hover, .view-more:focus {
+        color: var(--primary-hover);
+        text-decoration: none;
+    }
+
+    .view-more:hover i {
+        transform: translateX(3px);
+    }
+
+    .card-body {
+        padding: 20px;
+    }
+
+    /* ===================== */
+    /* === MANGA GRID UI === */
+    /* ===================== */
+    .row-last-update {
+        display: grid; /* Using grid for better layout control */
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Responsive columns */
+        gap: 20px;
+        /* display: flex; flex-wrap: wrap; gap: 20px; - Old flexbox way */
+    }
+
+    .thumb-item-flow {
+        /* width: calc(25% - 15px); - Removed, grid handles width */
+        background-color: var(--card-bg-secondary);
+        border-radius: var(--border-radius-md);
+        overflow: hidden;
+        box-shadow: var(--shadow-sm);
+        transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+        border: 1px solid var(--border-color);
+        display: flex;
+        flex-direction: column;
+    }
+
+    .thumb-item-flow:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--shadow-lg);
+    }
+
+    /* Responsive grid handled by grid-template-columns */
+    /* Media queries for grid width adjustment might not be needed anymore */
+    /* @media (max-width: 1100px) { .thumb-item-flow { width: calc(33.333% - 14px); } } */
+    /* @media (max-width: 768px) { .thumb-item-flow { width: calc(50% - 10px); } } */
+    /* @media (max-width: 480px) { .thumb-item-flow { width: 100%; } } */
+
+    /* Thumbnail wrapper with aspect ratio */
+    .thumb-wrapper {
+        position: relative;
+        overflow: hidden;
+        display: block; /* Make it a block for link */
+    }
+
+    .a6-ratio {
+        position: relative;
+        width: 100%;
+        padding-bottom: 140%; /* Manga cover aspect ratio */
+        background-color: #272b36;
+        overflow: hidden;
+        display: block;
+    }
+
+    .a6-ratio .content {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-size: cover;
+        background-position: center;
+        transition: transform 0.3s ease;
+    }
+
+    .thumb-wrapper:hover .a6-ratio .content {
+        transform: scale(1.05);
+    }
+
+    /* Placeholder image style */
+    .a6-ratio .content.placeholder {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.85em;
+        color: var(--text-tertiary);
+        text-align: center;
+    }
+
+    /* Badge for update time */
+    .manga-badge {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        z-index: 5;
+    }
+
+    .badge {
+        display: inline-block;
+        padding: 4px 10px;
+        font-size: 0.7em;
+        font-weight: 600;
+        line-height: 1;
+        color: var(--heading-color);
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: baseline;
+        border-radius: var(--border-radius-xl);
+        backdrop-filter: blur(5px);
+        -webkit-backdrop-filter: blur(5px);
+        letter-spacing: 0.5px;
+    }
+
+    .badge-info {
+        background-color: rgba(0, 0, 0, 0.65);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        display: inline-flex; /* Align icon and text */
+        align-items: center;
+        gap: 4px;
+    }
+
+    /* Manga item details */
+    .thumb_attr {
+        padding: 12px;
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1; /* Allow this section to grow */
+    }
+
+    /* Chapter button */
+    .chapter-title {
+        display: block;
+        background: linear-gradient(135deg, #3d8cff, #1166dd);
+        color: var(--heading-color);
+        font-size: 0.85em;
+        font-weight: 600;
+        text-align: center;
+        padding: 8px 10px; /* Adjusted padding */
+        border-radius: var(--border-radius-sm);
+        margin-top: auto; /* Push to bottom if space allows */
+        margin-bottom: 10px; /* Space before series title */
+        box-shadow: 0 3px 6px rgba(0, 102, 255, 0.2);
+        transition: transform var(--transition-fast), opacity var(--transition-fast);
+        text-decoration: none;
+    }
+
+    /* Remove nested link, apply styles directly */
+    /* .chapter-title a { color: var(--heading-color); display: block; } */
+
+    .chapter-title:hover, .chapter-title:focus {
+        transform: translateY(-2px);
+        opacity: 0.95;
+        color: var(--heading-color); /* Ensure color stays */
+        text-decoration: none;
+    }
+
+    /* Series title */
+    .series-title {
+        font-size: 0.95em;
+        font-weight: 600;
+        /* margin-top: 10px; - Replaced by margin-bottom on chapter */
+        text-align: center;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        line-height: 1.4;
+    }
+
+    .series-title a {
+        color: var(--text-primary);
+        transition: color var(--transition-fast);
+        text-decoration: none;
+    }
+
+    .series-title a:hover, .series-title a:focus {
+        color: var(--heading-color);
+        text-decoration: none;
+    }
+
+
+    /* ====================== */
+    /* === POPULAR SLIDER === */
+    /* ====================== */
+    .popular-manga-container {
+        display: flex;
+        overflow-x: auto;
+        padding-bottom: 15px; /* Space for scrollbar */
+        scroll-behavior: smooth;
+        scrollbar-width: thin; /* Firefox */
+        scrollbar-color: rgba(255, 255, 255, 0.2) rgba(255, 255, 255, 0.05); /* Firefox */
+        gap: 15px;
+        -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+    }
+
+    /* Webkit scrollbar styles */
+    .popular-manga-container::-webkit-scrollbar {
+        height: 6px;
+    }
+
+    .popular-manga-container::-webkit-scrollbar-track {
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 10px;
+    }
+
+    .popular-manga-container::-webkit-scrollbar-thumb {
+        background-color: rgba(255, 255, 255, 0.2);
+        border-radius: 10px;
+    }
+
+    .popular-manga-container::-webkit-scrollbar-thumb:hover {
+        background-color: rgba(255, 255, 255, 0.3);
+    }
+
+    .popular-thumb-item {
+        flex: 0 0 auto; /* Prevent shrinking/growing */
+        width: 200px;
+        background-color: var(--card-bg-secondary);
+        border-radius: var(--border-radius-md);
+        overflow: hidden;
+        box-shadow: var(--shadow-sm);
+        transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+        border: 1px solid var(--border-color);
+        display: flex; /* Ensure consistent structure */
+        flex-direction: column;
+    }
+
+    .popular-thumb-item:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--shadow-lg);
+    }
+
+    @media (max-width: 768px) {
+        .popular-thumb-item {
+            width: 160px;
+        }
+    }
+    @media (max-width: 480px) {
+        .popular-thumb-item {
+            width: 130px; /* Smaller on very small screens */
+        }
+    }
+
+    /* Slider navigation buttons */
+    .slider-navigation {
+        /* text-align: center; */
+        margin-top: 20px; /* Increased space */
+        display: flex;
+        justify-content: center;
+        align-items: center; /* Vertically align items */
+        gap: 15px;
+    }
+
+    .slider-button {
+        background: rgba(255, 255, 255, 0.1);
+        border: none;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--heading-color);
+        cursor: pointer;
+        transition: all var(--transition-fast);
+    }
+
+    .slider-button:hover, .slider-button:focus {
+        background: rgba(255, 255, 255, 0.2);
+        transform: translateY(-2px);
+        outline: none; /* Remove default focus outline, use custom below */
+    }
+
+    .slider-button:active {
+        transform: translateY(0);
+    }
+
+    .slider-button:focus-visible { /* Style only for keyboard focus */
+        box-shadow: 0 0 0 3px rgba(77, 182, 255, 0.3);
+    }
+
+    .slider-dots {
+        display: flex;
+        justify-content: center;
+        gap: 8px;
+        /* margin-top: 15px; - Removed, aligned by flexbox */
+        align-items: center;
+    }
+
+    .dot {
+        width: 8px;
+        height: 8px;
+        background-color: rgba(255, 255, 255, 0.3);
+        border-radius: 50%;
+        transition: all var(--transition-normal);
+        padding: 0; /* Reset padding */
+        border: none; /* Reset border */
+        cursor: pointer;
+    }
+
+    .dot.active {
+        background-color: var(--primary-color);
+        width: 25px; /* Active dot wider */
+        border-radius: 10px;
+    }
+
+
+    /* ===================== */
+    /* === MANGA DETAILS === */
+    /* ===================== */
+    .manga-post-container {
+        background-color: var(--card-bg);
+        padding: 25px;
+        border-radius: var(--border-radius-lg);
+        border: 1px solid var(--border-color);
+        margin-bottom: 25px;
+        box-shadow: var(--shadow-md);
+    }
+
+    /* Breadcrumbs */
+    .breadcrumbs {
+        margin-bottom: 20px;
+        color: var(--text-tertiary);
+        font-size: 0.9em;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 5px 8px; /* Row and column gap */
+    }
+
+    .breadcrumbs a {
+        color: var(--text-secondary);
+        transition: color var(--transition-fast);
+        text-decoration: none;
+    }
+
+    .breadcrumbs a:hover, .breadcrumbs a:focus {
+        color: var(--heading-color);
+        text-decoration: underline; /* Add underline on hover/focus */
+    }
+
+    .breadcrumbs span.separator { /* Style the separator */
+        color: #666;
+        user-select: none; /* Prevent selecting the slash */
+    }
+     .breadcrumbs i.fa-home { /* Style home icon */
+       margin-right: 3px;
+     }
+
+
+    /* Manga Info Grid */
+    .manga-info-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 30px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        padding-bottom: 30px;
+        margin-bottom: 30px;
+    }
+
+    /* Cover column */
+    .manga-info-left {
+        flex: 0 0 230px;
+        text-align: center;
+    }
+
+    @media (max-width: 768px) {
+        .manga-info-grid {
+            gap: 20px;
+        }
+
+        .manga-info-left {
+            flex: 1 1 100%; /* Make it full width */
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .manga-cover img {
+            max-width: 200px; /* Limit size on mobile */
+            margin: 0 auto; /* Center the image */
+        }
+    }
+
+    .manga-cover img {
+        width: 100%;
+        border-radius: var(--border-radius-md);
+        border: 2px solid rgba(255, 255, 255, 0.1);
+        box-shadow: var(--shadow-md);
+    }
+
+    /* Rating stars */
+    .manga-rating {
+        margin-top: 15px;
+    }
+
+    .manga-rating .stars {
+        font-size: 1.4em;
+        color: #ffca28;
+        margin-bottom: 5px;
+        letter-spacing: 2px;
+    }
+
+    .manga-rating .rating-text {
+        font-size: 0.85em;
+        color: var(--text-tertiary);
+    }
+
+    /* Details column */
+    .manga-info-right {
+        flex: 1 1 0; /* Allow it to grow and shrink */
+        min-width: 250px; /* Minimum width before wrapping */
+    }
+
+    /* Manga title */
+    .manga-title-main {
+        font-size: 2em;
+        font-weight: 700;
+        margin-top: 0;
+        margin-bottom: 20px;
+        color: var(--heading-color);
+        line-height: 1.3;
+    }
+    @media (max-width: 480px) {
+      .manga-title-main {
+        font-size: 1.6em; /* Smaller title on mobile */
+      }
+    }
+
+    /* Meta items */
+    .manga-meta-item {
+        margin-bottom: 15px;
+        font-size: 0.95em;
+        color: var(--text-secondary);
+        display: flex;
+        align-items: flex-start; /* Align icon with first line */
+        gap: 10px; /* Use gap instead of margin */
+    }
+
+    .manga-meta-item .meta-icon {
+        width: 20px;
+        /* margin-right: 10px; - Replaced by gap */
+        color: var(--text-tertiary);
+        text-align: center;
+        flex-shrink: 0; /* Prevent icon from shrinking */
+        padding-top: 0.1em; /* Align icon better */
+    }
+
+    .manga-meta-item .meta-label {
+        font-weight: 600;
+        color: var(--text-primary);
+        /* margin-right: 10px; - Replaced by gap */
+        min-width: 100px;
+        flex-shrink: 0;
+    }
+     .manga-meta-item .meta-value {
+       flex-grow: 1; /* Allow value to take remaining space */
+     }
+
+    /* Loading state for meta items */
+    .manga-meta-item .pulse {
+        color: var(--text-tertiary);
+        font-style: italic;
+        display: inline-block;
+        /* Animation handled by CSS */
+    }
+
+    /* Genre tags */
+    .manga-meta-item.genres .meta-value {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px; /* Consistent gap */
+    }
+
+    .manga-meta-item.genres .meta-value a {
+        display: inline-block;
+        padding: 3px 10px;
+        border-radius: var(--border-radius-xl);
+        font-size: 0.85em;
+        font-weight: 500;
+        transition: all var(--transition-fast);
+        background: rgba(255, 255, 255, 0.08);
+        color: var(--text-primary);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        text-decoration: none;
+    }
+
+    .manga-meta-item.genres .meta-value a:hover,
+    .manga-meta-item.genres .meta-value a:focus {
+        background: rgba(255, 255, 255, 0.15);
+        text-decoration: none;
+        transform: translateY(-2px);
+        outline: none; /* Remove default focus */
+    }
+    .manga-meta-item.genres .meta-value a:focus-visible {
+       box-shadow: 0 0 0 2px rgba(77, 182, 255, 0.3); /* Custom focus */
+    }
+
+    /* Genre colors - Kept as is */
+    .manga-meta-item.genres .meta-value a[href*='Comedy'] { background-color: rgba(52, 152, 219, 0.2); border-color: rgba(52, 152, 219, 0.4); }
+    .manga-meta-item.genres .meta-value a[href*='Drama'] { background-color: rgba(155, 89, 182, 0.2); border-color: rgba(155, 89, 182, 0.4); }
+    .manga-meta-item.genres .meta-value a[href*='Ecchi'] { background-color: rgba(241, 196, 15, 0.2); border-color: rgba(241, 196, 15, 0.4); }
+    .manga-meta-item.genres .meta-value a[href*='Romance'] { background-color: rgba(233, 30, 99, 0.2); border-color: rgba(233, 30, 99, 0.4); }
+    .manga-meta-item.genres .meta-value a[href*='Action'] { background-color: rgba(231, 76, 60, 0.2); border-color: rgba(231, 76, 60, 0.4); }
+    .manga-meta-item.genres .meta-value a[href*='Adventure'] { background-color: rgba(39, 174, 96, 0.2); border-color: rgba(39, 174, 96, 0.4); }
+    .manga-meta-item.genres .meta-value a[href*='Fantasy'] { background-color: rgba(142, 68, 173, 0.2); border-color: rgba(142, 68, 173, 0.4); }
+    .manga-meta-item.genres .meta-value a[href*='Supernatural'] { background-color: rgba(44, 62, 80, 0.2); border-color: rgba(44, 62, 80, 0.4); }
+
+    /* Status & Magazine badges */
+    .status-badge, .magazine-badge {
+        display: inline-block;
+        padding: 3px 12px;
+        border-radius: var(--border-radius-xl);
+        font-size: 0.85em;
+        font-weight: 600;
+    }
+
+    .status-badge.ongoing {
+        background-color: rgba(46, 204, 113, 0.2);
+        color: #2ecc71;
+        border: 1px solid rgba(46, 204, 113, 0.4);
+    }
+
+    .status-badge.completed {
+        background-color: rgba(52, 152, 219, 0.2);
+        color: #3498db;
+        border: 1px solid rgba(52, 152, 219, 0.4);
+    }
+
+    .magazine-badge {
+        background-color: rgba(240, 173, 78, 0.2);
+        color: #f0ad4e;
+        border: 1px solid rgba(240, 173, 78, 0.4);
+    }
+
+    /* Action buttons */
+    .manga-actions {
+        margin-top: 25px;
+        display: flex;
+        flex-wrap: wrap; /* Allow wrapping on small screens */
+        gap: 12px;
+    }
+
+    /* No need for media query flex-direction: column; wrap + gap handles it */
+    /* @media (max-width: 480px) { .manga-actions { flex-direction: column; } .manga-actions .btn-action { width: 100%; } } */
+
+    .manga-actions .btn-action {
+        padding: 10px 18px;
+        border-radius: var(--border-radius-sm);
+        font-size: 0.95em;
+        font-weight: 600;
+        cursor: pointer;
+        text-align: center;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px; /* Use gap for icon spacing */
+        transition: all var(--transition-fast);
+        border: none; /* Ensure no border */
+        text-decoration: none; /* Remove underline from links */
+        flex-grow: 1; /* Allow buttons to grow on smaller rows */
+        flex-basis: 150px; /* Minimum width before growing/wrapping */
+    }
+     @media (min-width: 480px) {
+       .manga-actions .btn-action {
+         flex-grow: 0; /* Don't grow on larger screens */
+       }
+     }
+
+
+    .manga-actions .btn-action .fa,
+    .manga-actions .btn-action .fas {
+        /* margin-right: 10px; - Replaced by gap */
+    }
+
+    .manga-actions .btn-action:hover,
+    .manga-actions .btn-action:focus {
+        transform: translateY(-2px);
+        text-decoration: none;
+        outline: none;
+    }
+     .manga-actions .btn-action:focus-visible {
+         box-shadow: 0 0 0 3px rgba(77, 182, 255, 0.3);
+     }
+
+    .btn-bookmark {
+        background-color: #e74c3c;
+        color: var(--heading-color);
+        box-shadow: 0 3px 10px rgba(231, 76, 60, 0.3);
+    }
+
+    .btn-bookmark:hover, .btn-bookmark:focus {
+        background-color: #c0392b;
+        color: var(--heading-color);
+    }
+
+    .btn-read-latest {
+        background-color: var(--primary-color); /* Use primary color */
+        color: var(--heading-color);
+        box-shadow: 0 3px 10px rgba(77, 182, 255, 0.3); /* Match primary color */
+    }
+
+    .btn-read-latest:hover, .btn-read-latest:focus {
+        background-color: var(--primary-hover); /* Use primary hover color */
+        color: var(--heading-color);
+    }
+
+    /* Description section */
+    .manga-description-section {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        padding-bottom: 30px;
+        margin-bottom: 30px;
+    }
+
+    .manga-description-section h3,
+    .manga-chapters-section h3 {
+        font-size: 1.4em;
+        margin-top: 0;
+        margin-bottom: 15px;
+        color: var(--heading-color);
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .manga-description-section h3 i,
+    .manga-chapters-section h3 i {
+        color: var(--primary-color);
+    }
+
+    .manga-description-content {
+        color: var(--text-secondary);
+        font-size: 0.95em;
+        line-height: 1.7;
+        /* Remove hidden meta from content flow */
+    }
+     .manga-description-content p:last-child {
+        margin-bottom: 0; /* Remove bottom margin from last paragraph */
+     }
+
+
+    /* Chapter list */
+    #chapter-list-container {
+        max-height: 400px;
+        overflow-y: auto;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: var(--border-radius-md);
+        background-color: var(--card-bg-secondary);
+        scrollbar-width: thin; /* Firefox */
+        scrollbar-color: rgba(255, 255, 255, 0.2) rgba(255, 255, 255, 0.05); /* Firefox */
+    }
+
+    #chapter-list-container::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    #chapter-list-container::-webkit-scrollbar-track {
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 10px; /* Match thumb radius */
+    }
+
+    #chapter-list-container::-webkit-scrollbar-thumb {
+        background-color: rgba(255, 255, 255, 0.2);
+        border-radius: 10px;
+    }
+
+    #chapter-list-container::-webkit-scrollbar-thumb:hover {
+        background-color: rgba(255, 255, 255, 0.3);
+    }
+
+    #chapter-list-container ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    #chapter-list-container li {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 12px 18px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        transition: background-color var(--transition-fast);
+        gap: 15px; /* Add gap between link and time */
+    }
+
+    #chapter-list-container li:hover {
+        background-color: rgba(255, 255, 255, 0.05);
+    }
+
+    #chapter-list-container li:last-child {
+        border-bottom: none;
+    }
+
+    /* #chapter-list-container li:nth-child(even) { background-color: rgba(0, 0, 0, 0.15); } */
+    /* #chapter-list-container li:nth-child(even):hover { background-color: rgba(255, 255, 255, 0.05); } */
+    /* Removing zebra striping for cleaner look */
+
+    #chapter-list-container li a {
+        color: var(--text-primary);
+        font-weight: 500;
+        font-size: 0.95em;
+        transition: color var(--transition-fast);
+        flex-grow: 1; /* Allow link to take space */
+        text-decoration: none;
+        overflow: hidden; /* Prevent long titles overflowing */
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    #chapter-list-container li a:hover,
+    #chapter-list-container li a:focus {
+        color: var(--heading-color);
+        text-decoration: underline;
+        outline: none;
+    }
+
+    #chapter-list-container li .chapter-time {
+        font-size: 0.85em;
+        color: var(--text-tertiary);
+        white-space: nowrap;
+        /* margin-left: 15px; - Replaced by gap */
+        flex-shrink: 0; /* Prevent time from shrinking */
+    }
+
+    /* Hidden metadata - Should not be visible */
+    .manga-hidden-meta {
+        display: none !important; /* Force hide visually */
+        visibility: hidden !important;
+        position: absolute !important; /* Remove from layout flow */
+        left: -9999px;
+    }
+
+    /* ================== */
+    /* === FOOTER UI === */
+    /* ================== */
+    .footer {
+        background: linear-gradient(to right, #1a1e25, #151821);
+        padding: 35px 20px;
+        /* text-align: center; - Align content left in columns */
+        margin-top: 40px;
+        border-top: 1px solid var(--border-color);
+        color: var(--text-tertiary);
+    }
+
+    .footer-content {
+        max-width: var(--container-width);
+        margin: 0 auto;
+        display: grid; /* Use grid for footer columns */
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); /* Responsive columns */
+        gap: 30px;
+        text-align: left; /* Align text left in grid cells */
+    }
+
+    .footer-column {
+        /* flex: 1 1 250px; - Removed */
+        /* text-align: left; - Moved to grid container */
+    }
+
+    .footer-column h4 {
+        color: var(--heading-color);
+        margin-bottom: 15px;
+        font-size: 1.1em;
+        font-weight: 600;
+        position: relative;
+        padding-bottom: 10px;
+    }
+
+    .footer-column h4::after { /* Corrected pseudo-element */
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 40px;
+        height: 3px;
+        background: var(--primary-color);
+        border-radius: 3px;
+    }
+
+    .footer-column ul {
+        list-style: none;
+        padding: 0;
+        margin: 0; /* Reset margin */
+    }
+
+    .footer-column ul li {
+        margin-bottom: 8px;
+    }
+
+    .footer-column ul li a {
+        color: var(--text-tertiary);
+        font-size: 0.9em;
+        transition: all var(--transition-fast);
+        display: inline-flex;
+        align-items: center;
+        text-decoration: none;
+    }
+
+    .footer-column ul li a:hover,
+    .footer-column ul li a:focus {
+        color: var(--heading-color);
+        text-decoration: none;
+        transform: translateX(3px);
+        outline: none;
+    }
+
+    .footer-column ul li a i {
+        margin-right: 8px; /* Increase space */
+        width: 1em; /* Give icon fixed width */
+        text-align: center;
+    }
+
+    .footer-column p { /* Style paragraph in footer */
+      font-size: 0.9em;
+      line-height: 1.6;
+    }
+
+    .footer-column .social-icons {
+        display: flex;
+        flex-wrap: wrap; /* Allow wrapping */
+        gap: 10px;
+        margin-top: 15px;
+    }
+
+    .footer-column .social-icons a {
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        background-color: rgba(255, 255, 255, 0.1);
+        color: var(--heading-color);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all var(--transition-fast);
+        text-decoration: none; /* Remove underline */
+    }
+
+    .footer-column .social-icons a:hover,
+    .footer-column .social-icons a:focus {
+        background-color: var(--primary-color);
+        transform: translateY(-3px);
+        outline: none;
+    }
+
+    .footer-bottom {
+        margin-top: 35px;
+        padding-top: 20px;
+        border-top: 1px solid var(--border-color);
+        text-align: center;
+        font-size: 0.85em;
+        color: #888;
+    }
+
+    .footer-bottom a {
+        color: var(--text-tertiary);
+        transition: color var(--transition-fast);
+        text-decoration: none;
+    }
+
+    .footer-bottom a:hover, .footer-bottom a:focus {
+        color: var(--heading-color);
+        text-decoration: underline;
+    }
+
+    /* ======================== */
+    /* === BLOG PAGINATION === */
+    /* ======================== */
+    .blog-pager {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        margin: 30px 0;
+        align-items: center;
+        flex-wrap: wrap; /* Allow wrapping */
+    }
+
+    .blog-pager a {
+        padding: 8px 16px;
+        background-color: rgba(255, 255, 255, 0.1);
+        color: var(--text-primary);
+        border-radius: var(--border-radius-sm);
+        font-size: 0.9em;
+        font-weight: 500;
+        transition: all var(--transition-fast);
+        display: inline-flex;
+        align-items: center;
+        text-decoration: none;
+    }
+
+    .blog-pager a:hover, .blog-pager a:focus {
+        background-color: rgba(255, 255, 255, 0.15);
+        color: var(--heading-color);
+        text-decoration: none;
+        transform: translateY(-2px);
+        outline: none;
+    }
+     .blog-pager a:focus-visible {
+        box-shadow: 0 0 0 2px rgba(77, 182, 255, 0.3);
+     }
+
+    .blog-pager .fa-arrow-left {
+        margin-right: 8px;
+    }
+
+    .blog-pager .fa-arrow-right {
+        margin-left: 8px;
+    }
+     .blog-pager .fa-home {
+        margin-right: 5px; /* Space for home icon */
+     }
+
+    /* === COMMENTS === */
+    .comments {
+        background-color: var(--card-bg);
+        padding: 25px;
+        border-radius: var(--border-radius-lg);
+        margin-top: 25px;
+        border: 1px solid var(--border-color);
+    }
+
+    .comments h4 {
+        color: var(--heading-color);
+        margin-top: 0;
+        margin-bottom: 20px;
+        font-size: 1.3em;
+        font-weight: 600;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        padding-bottom: 10px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .comments h4 i {
+        color: var(--primary-color);
+    }
+
+    .comment-thread { /* Wrapper for comments */
+      margin-top: 25px;
+    }
+
+    .comment {
+        margin-bottom: 20px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .comment:last-child {
+        border-bottom: none;
+        margin-bottom: 0;
+        padding-bottom: 0;
+    }
+
+    .comment-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center; /* Align author and time */
+        margin-bottom: 10px;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .comment-author {
+        font-weight: 600;
+        color: var(--text-primary);
+    }
+     .comment-author a {
+       color: var(--text-primary);
+       text-decoration: none;
+     }
+     .comment-author a:hover {
+       color: var(--heading-color);
+       text-decoration: underline;
+     }
+
+
+    .comment-timestamp {
+        font-size: 0.85em;
+        color: var(--text-tertiary); /* Made slightly lighter */
+    }
+     .comment-timestamp a {
+        color: var(--text-tertiary);
+        text-decoration: none;
+     }
+      .comment-timestamp a:hover {
+        color: var(--text-secondary);
+        text-decoration: underline;
+     }
+
+
+    .comment-content {
+        color: var(--text-secondary);
+        font-size: 0.95em;
+        line-height: 1.6; /* Increased line height */
+    }
+     .comment-content .deleted-comment { /* Style deleted comments */
+        font-style: italic;
+        color: var(--text-tertiary);
+     }
+
+    /* Comment form */
+    .comment-form {
+        margin-top: 20px;
+    }
+
+    .comment-form-container {
+        background-color: rgba(255, 255, 255, 0.05);
+        border-radius: var(--border-radius-md);
+        padding: 15px;
+        margin-top: 10px;
+    }
+    /* Style the iframe itself */
+    iframe.blogger-comment-from-post {
+       border: 1px solid var(--border-color);
+       border-radius: var(--border-radius-sm);
+       max-width: 100%; /* Ensure it fits */
+    }
+
+
+    /* === SEARCH BAR === */
+    .search-bar {
+        margin-bottom: 25px;
+        padding: 0 20px; /* Add padding to match container */
+    }
+
+    .search-container {
+        background-color: var(--card-bg);
+        border-radius: var(--border-radius-xl);
+        display: flex;
+        align-items: center;
+        padding: 5px;
+        border: 1px solid var(--border-color-light);
+        max-width: 500px;
+        margin: 0 auto;
+        transition: all 0.3s ease;
+    }
+
+    .search-container:focus-within {
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 3px rgba(77, 182, 255, 0.15);
+    }
+
+    .search-container input[type="text"] {
+        flex: 1;
+        background: transparent;
+        border: none;
+        padding: 10px 15px;
+        font-size: 0.95em;
+        color: var(--heading-color);
+        outline: none;
+        font-family: var(--font-family-primary);
+    }
+
+    .search-container input[type="text"]::placeholder {
+        color: var(--text-tertiary);
+        opacity: 0.7;
+    }
+
+    .search-container button {
+        background: var(--primary-color);
+        color: var(--heading-color);
+        border: none;
+        border-radius: var(--border-radius-xl); /* Match container */
+        padding: 10px 20px;
+        font-size: 0.9em;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background-color var(--transition-fast), transform var(--transition-fast);
+        display: flex; /* Align icon */
+        align-items: center;
+        gap: 5px;
+    }
+
+    .search-container button:hover, .search-container button:focus {
+        background-color: var(--primary-hover); /* Use defined hover color */
+        transform: translateY(-2px);
+        outline: none;
+    }
+
+    .search-container button:active {
+        transform: translateY(0);
+    }
+
+    /* Search results highlight */
+    .search-highlight {
+        background-color: rgba(77, 182, 255, 0.15);
+        padding: 0 2px;
+        border-radius: 3px;
+        font-weight: bold; /* Make highlight stand out */
+    }
+
+    /* === HELPER CLASSES === */
+    .text-center { text-align: center; }
+    .mb-20 { margin-bottom: 20px; }
+    .mt-30 { margin-top: 30px; }
+    .no-posts-message { /* Specific class for "no posts" */
+       width: 100%;
+       padding: 40px 20px;
+       text-align: center;
+       color: var(--text-secondary);
+       font-style: italic;
+       background-color: var(--card-bg-secondary);
+       border: 1px dashed var(--border-color);
+       border-radius: var(--border-radius-md);
+    }
+
+    /* === LOADING ANIMATIONS === */
+    .loading-spinner {
+        width: 40px;
+        height: 40px;
+        border: 3px solid rgba(255, 255, 255, 0.1);
+        border-radius: 50%;
+        border-top-color: var(--primary-color);
+        animation: spin 1s linear infinite;
+        margin: 20px auto;
+    }
+
+    @keyframes spin {
+        to { transform: rotate(360deg); }
+    }
+
+    .pulse {
+        animation: pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+
+    @keyframes pulse {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.5; }
+    }
+
+    /* === ACCESSIBILITY === */
+    .sr-only { /* Screen Reader Only */
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border-width: 0;
+    }
+
+    /* Consistent Focus Styles */
+    :focus {
+        outline: none; /* Remove default */
+    }
+    :focus-visible { /* Style only keyboard focus */
+        outline: 3px solid rgba(77, 182, 255, 0.5);
+        outline-offset: 2px;
+        box-shadow: 0 0 0 3px rgba(77, 182, 255, 0.3); /* Optional glow */
+        border-radius: var(--border-radius-sm); /* Match border radius */
+    }
+    /* Apply focus-visible to common interactive elements if needed */
+    /* a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible {} */
+
+
+    /* Skip to content link */
+    .skip-link {
+        position: absolute;
+        top: -100px; /* Hide off-screen */
+        left: 10px;
+        background: var(--primary-color);
+        color: white;
+        padding: 10px 15px;
+        z-index: 10001; /* Above header */
+        transition: top 0.3s ease;
+        border-radius: 0 0 var(--border-radius-sm) var(--border-radius-sm);
+        font-weight: 600;
+        text-decoration: none;
+    }
+
+    .skip-link:focus {
+        top: 0;
+        outline: none; /* Handled by focus-visible */
+    }
+
+    /* === DEBUGGING - Temporary === */
+    .debug-info {
+        background-color: rgba(255, 0, 0, 0.1);
+        border: 1px solid #ff0000;
+        padding: 15px; /* Increased padding */
+        margin: 15px 0;
+        border-radius: var(--border-radius-md);
+        color: #ffaaaa; /* Lighter red text */
+        font-size: 0.9em;
+        line-height: 1.5;
+    }
+     .debug-info p { margin-bottom: 5px; }
+     .debug-info strong { color: #ffdddd; }
+     #debug-details {
+       margin-top: 10px;
+       padding-top: 10px;
+       border-top: 1px dashed rgba(255, 107, 107, 0.5);
+     }
+
+
+    /* Force visibility for posts - IMPORTANT */
+    .force-visible {
+        display: flex !important; /* Use flex as article uses flex */
+        visibility: visible !important;
+        opacity: 1 !important;
+        /* Ensure no other style accidentally sets display: none */
+        height: auto !important;
+        overflow: visible !important;
+    }
+    ]]></b:skin>
+    <!-- Add other head elements like meta tags, fonts, etc. -->
+</head>
+
+<body>
+    <!-- Accessibility: Skip to content link -->
+    <a class='skip-link' href='#content'>Skip to main content</a>
+
+    <!-- Header/Navbar -->
+    <header class='navbar navbar-inverse' id='header' role='banner'>
+        <div class='container_header'>
+            <a aria-label='{data:blog.title} Home' class='navbar-brand' expr:href='data:blog.homepageUrl'>
+                <i aria-hidden='true' class='fas fa-book-reader'/>
+                <data:blog.title/>
+            </a>
+
+            <!-- Mobile Nav Toggle -->
+            <button aria-controls='main-nav' aria-expanded='false' aria-label='Toggle Navigation' class='mobile-nav-toggle'>
+                <i aria-hidden='true' class='fas fa-bars'/>
+            </button>
+
+            <!-- Navigation -->
+            <nav aria-label='Main navigation' role='navigation'>
+                <ul class='navbar-nav' id='main-nav'>
+                    <!-- Add logic for active class if needed, or use JS -->
+                    <li><a expr:href='data:blog.homepageUrl'><i aria-hidden='true' class='fas fa-home'/> Home</a></li>
+                    <li><a href='/search/label/Manga'><i aria-hidden='true' class='fas fa-list'/> Manga List</a></li>
+                    <li><a href='/search/label/Popular?max-results=12'><i aria-hidden='true' class='fas fa-fire'/> Popular</a></li>
+                    <li><a href='/search/label/Genres'><i aria-hidden='true' class='fas fa-tags'/> Genres</a></li>
+                    <li><a href='/p/history.html'><i aria-hidden='true' class='fas fa-history'/> History</a></li> <!-- Example: Link to a static page for History -->
+                    <li><a href='/search'><i aria-hidden='true' class='fas fa-search'/> Search</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class='container' id='content' role='main'>
+        <!-- Optional Search Bar for Homepage -->
+        <b:if cond='data:blog.pageType == &quot;index&quot;'>
+            <section aria-label='Search Manga' class='search-bar'>
+                <form action='/search' class='search-container' role='search'>
+                    <input aria-label='Search for manga' name='q' placeholder='Search for manga series...' required='required' type='text'/>
+                    <button type='submit'><i aria-hidden='true' class='fas fa-search'/> Search</button>
+                </form>
+            </section>
+        </b:if>
+
+        <!-- Main Content Section -->
+        <b:section class='main' id='main' maxwidgets='1' name='Main Content' showaddelement='yes'>
+          <b:widget id='Blog1' locked='false' title='Postingan Blog' type='Blog' version='2' visible='true'>
+            <b:widget-settings>
+              <b:widget-setting name='showDateHeader'>false</b:widget-setting>
+              <b:widget-setting name='commentLabel'>Komentar</b:widget-setting>
+              <b:widget-setting name='style.textcolor'>#ffffff</b:widget-setting>
+              <b:widget-setting name='showShareButtons'>false</b:widget-setting>
+              <b:widget-setting name='showCommentLink'>false</b:widget-setting>
+              <b:widget-setting name='style.urlcolor'>#ffffff</b:widget-setting>
+              <b:widget-setting name='showAuthor'>false</b:widget-setting>
+              <b:widget-setting name='style.linkcolor'>#ffffff</b:widget-setting>
+              <b:widget-setting name='style.unittype'>TextAndImage</b:widget-setting>
+              <b:widget-setting name='style.bgcolor'>#ffffff</b:widget-setting>
+              <b:widget-setting name='timestampLabel'>pada</b:widget-setting>
+              <b:widget-setting name='reactionsLabel'/>
+              <b:widget-setting name='showAuthorProfile'>false</b:widget-setting>
+              <b:widget-setting name='style.layout'>1x1</b:widget-setting>
+              <b:widget-setting name='showLabels'>true</b:widget-setting>
+              <b:widget-setting name='showLocation'>false</b:widget-setting>
+              <b:widget-setting name='postLabelsLabel'>Tags</b:widget-setting>
+              <b:widget-setting name='showTimestamp'>true</b:widget-setting>
+              <b:widget-setting name='postsPerAd'>1</b:widget-setting>
+              <b:widget-setting name='showBacklinks'>false</b:widget-setting>
+              <b:widget-setting name='style.bordercolor'>#ffffff</b:widget-setting>
+              <b:widget-setting name='showInlineAds'>false</b:widget-setting>
+              <b:widget-setting name='backlinksLabel'/>
+              <b:widget-setting name='showReactions'>false</b:widget-setting>
+            </b:widget-settings>
+            <b:includable id='main' var='this'>
+                <!--
+                ============================================
+                === BLOG MAIN CONTENT (HOMEPAGE/ARCHIVE) ===
+                ============================================
+                This section determines what shows up on the homepage, label pages, search results, etc.
+                The core logic is the <b:loop values='data:posts' var='post'> which iterates through available posts.
+                Make sure the "Blog Posts" widget in Blogger Layout is configured correctly (e.g., "Number of posts on main page").
+                -->
+
+                <b:if cond='data:view.isHomepage'>
+                    <!-- ====================== -->
+                    <!-- === HOMEPAGE START === -->
+                    <!-- ====================== -->
+
+                    <!-- Popular Manga Section -->
+                    <section aria-labelledby='popular-manga-title' class='card'>
+                        <div class='card-header'>
+                            <h2 class='card-title' id='popular-manga-title'><i aria-hidden='true' class='fas fa-fire'/> POPULAR MANGA</h2>
+                            <a class='view-more' href='/search/label/Popular?max-results=12'>View More <i aria-hidden='true' class='fas fa-angle-right'/></a>
+                        </div>
+                        <div class='card-body'>
+                            <div aria-label='Popular manga slider' class='popular-manga-container' id='popular-slider'>
+                                <!-- Demo items or real items (if using a specific label for popular) will be added by JavaScript -->
+                                <!-- Placeholder while loading or if empty -->
+                                <div class='loading-spinner' style='margin: 30px auto; display: block;'/>
+                            </div>
+
+                            <!-- Slider navigation -->
+                            <div aria-label='Slider controls' class='slider-navigation'>
+                                <button aria-label='Previous slide' class='slider-button prev-button'>
+                                    <i aria-hidden='true' class='fas fa-chevron-left'/>
+                                </button>
+                                <div class='slider-dots' role='tablist'>
+                                    <!-- Dots will be generated by JS -->
+                                </div>
+                                <button aria-label='Next slide' class='slider-button next-button'>
+                                    <i aria-hidden='true' class='fas fa-chevron-right'/>
+                                </button>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- New Manga Updated Section -->
+                    <section aria-labelledby='new-updates-title' class='card'>
+                        <div class='card-header'>
+                            <h2 class='card-title' id='new-updates-title'><i aria-hidden='true' class='fas fa-newspaper'/> NEW MANGA UPDATED</h2>
+                            <a class='view-more' expr:href='data:blog.homepageUrl + &quot;?max-results=24&quot;'>View More <i aria-hidden='true' class='fas fa-angle-right'/></a>
+                        </div>
+                        <div class='card-body'>
+                            <div class='row-last-update'>
+                                <!-- === THE MAIN POST LOOP START === -->
+                                <!-- This loop displays posts based on Blogger's internal query for the current page -->
+                                <!-- Ensure the "Blog Posts" widget in Layout has "Number of posts on main page" set correctly -->
+                                <b:loop values='data:posts' var='post'>
+                                    <!-- Using the 'postListItem' includable for consistency -->
+                                    <b:include data='post' name='postListItem'/>
+                                </b:loop>
+                                <!-- === THE MAIN POST LOOP END === -->
+
+                                <!-- Message if NO posts are found AT ALL in the blog -->
+                                <b:if cond='data:posts size == 0'>
+                                   <div class='no-posts-message'>
+                                        <p>No manga chapters published yet.</p>
+                                        <p>Start publishing your manga posts!</p>
+                                        <!-- Optionally add sample posts here if desired when ZERO posts exist -->
+                                        <!-- <div id='sample-posts-container' style='display: contents;'></div> -->
+                                    </div>
+                                </b:if>
+                            </div> <!-- /.row-last-update -->
+                        </div> <!-- /.card-body -->
+                    </section>
+
+                    <!-- Debug Info Section -->
+                    <b:if cond='data:blog.isAdmin'> <!-- Only show debug for admin -->
+                    <section aria-labelledby='debug-title' class='card'>
+                        <div class='card-header'>
+                            <h2 class='card-title' id='debug-title'><i aria-hidden='true' class='fas fa-bug'/> DEBUGGING INFO (Admin Only)</h2>
+                            <a class='view-more' href='#' onclick='document.getElementById(&quot;debug-details&quot;).style.display = (document.getElementById(&quot;debug-details&quot;).style.display === &quot;none&quot; ? &quot;block&quot; : &quot;none&quot;); return false;'>Toggle Details <i aria-hidden='true' class='fas fa-eye'/></a>
+                        </div>
+                        <div class='card-body'>
+                            <div class='debug-info'>
+                                <p><strong>Page Type:</strong> <data:blog.pageType/></p>
+                                <p><strong>Posts Found by Blogger Query (data:posts size):</strong> <data:posts.size/></p>
+                                <p><strong>Posts Rendered in Grid (Check JS):</strong> <span id='post-count-rendered'>Checking...</span></p>
+                                <div id='debug-details' style='display:none;'>
+                                    <p><strong>Images Found (Check JS):</strong> <span id='images-found'>Checking...</span></p>
+                                    <p><strong>Browser Info:</strong> <span id='browser-info'>Checking...</span></p>
+                                    <p><strong>Template Version:</strong> <span>manga-clean-theme-v4</span></p>
+                                    <p><strong>Widget Settings (Blog1):</strong></p>
+                                    <ul style='margin-left: 20px; list-style: disc;'>
+                                        <li>showDateHeader: <b:eval expr='data:widgets.Blog.first.showDateHeader ? &quot;true&quot; : &quot;false&quot;'/></li>
+                                        <li>showAuthor: <b:eval expr='data:widgets.Blog.first.showAuthor ? &quot;true&quot; : &quot;false&quot;'/></li>
+                                        <li>showTimestamp: <b:eval expr='data:widgets.Blog.first.showTimestamp ? &quot;true&quot; : &quot;false&quot;'/></li>
+                                        <li>postsPerAd: <data:widgets.Blog.first.postsPerAd/></li>
+                                        <li>Number of posts on main page: (Set this in Blogger Layout &gt; Blog Posts widget)</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    </b:if> <!-- End Admin Debug -->
+
+                    <!-- Pagination -->
+                    <b:include name='nextprev'/>
+
+                    <!-- ==================== -->
+                    <!-- === HOMEPAGE END === -->
+                    <!-- ==================== -->
+
+                <b:elseif cond='data:view.isMultipleItems'/>
+                    <!-- ======================================== -->
+                    <!-- === ARCHIVE/LABEL/SEARCH PAGES START === -->
+                    <!-- ======================================== -->
+                    <section aria-labelledby='archive-title' class='card'>
+                        <div class='card-header'>
+                            <h2 class='card-title' id='archive-title'>
+                                <b:if cond='data:view.search.query'>
+                                    <i aria-hidden='true' class='fas fa-search'/> Search Results for: &quot;<data:view.search.query.escaped/>&quot;
+                                <b:elseif cond='data:view.search.label'/>
+                                    <i aria-hidden='true' class='fas fa-tag'/> Category: <data:view.search.label/>
+                                <b:elseif cond='data:view.isArchive'/>
+                                    <i aria-hidden='true' class='fas fa-calendar'/> Archive: <data:blog.pageName/>
+                                <b:else/>
+                                    <i aria-hidden='true' class='fas fa-folder'/> <data:blog.pageName/>
+                                </b:if>
+                            </h2>
+                            <!-- Optional: Add view more or refine search link -->
+                        </div>
+                        <div class='card-body'>
+                            <div class='row-last-update'>
+                                <!-- Loop through posts for this specific view -->
+                                <b:loop values='data:posts' var='post'>
+                                     <b:include data='post' name='postListItem'/>
+                                </b:loop>
+
+                                <!-- Message if no posts found for this specific query/label/archive -->
+                                <b:if cond='data:posts size == 0'>
+                                     <div class='no-posts-message'>
+                                        <p>No content found matching your criteria.</p>
+                                    </div>
+                                </b:if>
+                            </div> <!-- /.row-last-update -->
+
+                            <!-- Pagination for archive/label pages -->
+                            <b:include name='nextprev'/>
+                        </div> <!-- /.card-body -->
+                    </section>
+                    <!-- ====================================== -->
+                    <!-- === ARCHIVE/LABEL/SEARCH PAGES END === -->
+                    <!-- ====================================== -->
+
+                <b:elseif cond='data:view.isSingleItem'/>
+                    <!-- ============================= -->
+                    <!-- === SINGLE POST PAGE START === -->
+                    <!-- ============================= -->
+                    <!-- The 'post' includable handles the detailed view -->
+                    <b:loop values='data:posts' var='post'>
+                        <b:include data='post' name='post'/>
+                    </b:loop>
+                    <!-- =========================== -->
+                    <!-- === SINGLE POST PAGE END === -->
+                    <!-- =========================== -->
+
+                <b:elseif cond='data:view.isPage'/>
+                    <!-- ============================= -->
+                    <!-- === STATIC PAGE START === -->
+                    <!-- ============================= -->
+                     <section aria-labelledby='page-title' class='card'>
+                        <div class='card-header'>
+                             <h1 class='card-title' id='page-title'><data:blog.pageName/></h1>
+                        </div>
+                        <div class='card-body'>
+                            <b:loop values='data:posts' var='post'>
+                               <div class='static-page-content'>
+                                 <data:post.body/>
+                               </div>
+                               <b:include data='post' name='comments'/> <!-- Include comments if allowed -->
+                            </b:loop>
+                        </div>
+                     </section>
+                    <!-- =========================== -->
+                    <!-- === STATIC PAGE END === -->
+                    <!-- =========================== -->
+                <b:else/>
+                     <div class='no-posts-message'>
+                        <p>Nothing to display for this view (<data:blog.pageType/>).</p>
+                    </div>
+                </b:if> <!-- End pageType checks -->
+
+            </b:includable>
+            <b:includable id='aboutPostAuthor'>
+  <div class='author-name'>
+    <a class='g-profile' expr:href='data:post.author.profileUrl' rel='author' title='author profile'>
+      <span>
+        <data:post.author.name/>
+      </span>
+    </a>
+  </div>
+  <div>
+    <span class='author-desc'>
+      <data:post.author.aboutMe/>
+    </span>
+  </div>
+</b:includable>
+            <b:includable id='addComments'>
+  <a expr:href='data:post.commentsUrl' expr:onclick='data:post.commentsUrlOnclick'>
+    <b:message name='messages.postAComment'/>
+  </a>
+</b:includable>
+            <b:includable id='backlinkDeleteIcon' var='backlink'/>
+            <b:includable id='backlinks' var='post'/>
+            <b:includable id='comment-form' var='post'> <!-- Standard non-threaded form, use 'commentForm' instead --> </b:includable>
+            <b:includable id='commentAuthorAvatar'>
+  <div class='avatar-image-container'>
+    <img class='author-avatar' expr:src='data:comment.authorAvatarSrc' height='35' width='35'/>
+  </div>
+</b:includable>
+            <b:includable id='commentDeleteIcon' var='comment'/>
+            <b:includable id='commentForm' var='post'>
+                 <b:if cond='data:post.embedCommentForm'>
+                    <div class='comment-form-wrapper'> <!-- Wrapper -->
+                      <b:include data='post' name='commentFormIframeSrc'/>
+                      <div class='comment-form-container'>
+                         <iframe allowtransparency='true' class='blogger-iframe-colorize blogger-comment-from-post' expr:height='data:cmtIframeInitialHeight' frameborder='0' id='comment-editor' name='comment-editor' src='' title='Comment Form' width='100%'/>
+                      </div>
+                      <data:post.cmtfpIframe/>
+                      <script type='text/javascript'>BLOG_CMT_createIframe(&#39;<data:post.appRpcRelayPath/>&#39;);</script>
+                   </div>
+                 <b:else/>
+                    <p><a expr:href='data:post.addCommentUrl' expr:onclick='data:post.addCommentOnclick'>Post a Comment</a></p>
+                 </b:if>
+            </b:includable>
+            <b:includable id='commentFormIframeSrc' var='post'>
+                <a expr:href='data:post.commentFormIframeSrc' id='comment-editor-src' style='display:none;'/>
+             </b:includable>
+            <b:includable id='commentItem' var='comment'>
+  <div class='comment' expr:id='&quot;c&quot; + data:comment.id'>
+    <b:include cond='data:blog.enabledCommentProfileImages' name='commentAuthorAvatar'/>
+
+    <div class='comment-block'>
+      <div class='comment-author'>
+        <b:if cond='data:comment.authorUrl'>
+          <b:message name='messages.authorSaidWithLink'>
+            <b:param expr:value='data:comment.author' name='authorName'/>
+            <b:param expr:value='data:comment.authorUrl' name='authorUrl'/>
+          </b:message>
+        <b:else/>
+          <b:message name='messages.authorSaid'>
+            <b:param expr:value='data:comment.author' name='authorName'/>
+          </b:message>
+        </b:if>
+      </div>
+      <div expr:class='&quot;comment-body&quot; + (data:comment.isDeleted ? &quot; deleted&quot; : &quot;&quot;)'>
+        <data:comment.body/>
+      </div>
+      <div class='comment-footer'>
+        <span class='comment-timestamp'>
+          <a expr:href='data:comment.url' title='comment permalink'>
+            <data:comment.timestamp/>
+          </a>
+          <b:include data='comment' name='commentDeleteIcon'/>
+        </span>
+      </div>
+    </div>
+  </div>
+</b:includable>
+            <b:includable id='commentList' var='post'>
+                  <div class='comments-content'> <!-- Wrapper for actual comments -->
+                    <b:if cond='data:post.comments and data:post.comments.size &gt; 0'>
+                      <div id='comments-block'>
+                        <b:loop values='data:post.comments' var='comment'>
+                          <div class='comment' expr:id='&quot;comment-&quot; + data:comment.id'>
+                            <div class='comment-header'>
+                              <div class='comment-author'>
+                                <b:if cond='data:comment.authorUrl'>
+                                  <a expr:href='data:comment.authorUrl' rel='nofollow external'><data:comment.author/></a>
+                                <b:else/>
+                                  <data:comment.author/>
+                                </b:if>
+                              </div>
+                              <div class='comment-timestamp'>
+                                <a expr:href='data:comment.url' title='Comment permalink'>
+                                  <time class='timeago' expr:datetime='data:comment.timestamp' expr:title='data:comment.timestamp'><data:comment.timestamp/></time>
+                                </a>
+                              </div>
+                            </div>
+                            <div class='comment-content'>
+                              <b:if cond='data:comment.isDeleted'>
+                                <span class='deleted-comment'>This comment has been removed.</span>
+                              <b:else/>
+                                <p><data:comment.body/></p> <!-- Wrap comment body in <p> -->
+                              </b:if>
+                            </div>
+                            <!-- Add Reply/Delete Links if using threaded comments later -->
+                          </div>
+                        </b:loop>
+                      </div>
+                    <b:else/>
+                      <p class='text-center' style='margin-top: 20px;'>No comments yet. Be the first to share your thoughts!</p>
+                    </b:if>
+                  </div> <!-- End .comments-content -->
+            </b:includable>
+            <b:includable id='commentPicker' var='post'>
+  <b:if cond='data:post.showThreadedComments'>
+    <b:include data='post' name='threadedComments'/>
+  <b:else/>
+    <b:include data='post' name='comments'/>
+  </b:if>
+</b:includable>
+            <b:includable id='comment_count_picker' var='post'/>
+            <b:includable id='comment_picker' var='post'/>
+            <b:includable id='comments' var='post'>
+              <b:if cond='data:post.allowComments'>
+                  <section aria-labelledby='comments-heading' class='comments' id='comments-section'>
+                    <h4 id='comments-heading'><i aria-hidden='true' class='fas fa-comments'/> Comments (<data:post.numberOfComments/>)</h4>
+
+                    <div class='comment-thread'>
+                      <b:include data='post' name='commentList'/>
+                    </div>
+
+                    <div class='comment-form'>
+                      <b:include data='post' name='commentForm'/>
+                    </div>
+                  </section>
+              </b:if>
+            </b:includable>
+            <b:includable id='commentsTitle'>
+  <h3 class='title'><data:messages.comments/></h3>
+</b:includable>
+            <b:includable id='feedLinks'/>
+            <b:includable id='feedLinksBody' var='links'/>
+            <b:includable id='homePageLink'>
+  <a class='home-link' expr:href='data:blog.homepageUrl'>
+    <data:messages.home/>
+  </a>
+</b:includable>
+            <b:includable id='iframeComments' var='post'>
+  <!-- G+ comments, no longer available. The includable is retained for backwards-compatibility. -->
+</b:includable>
+            <b:includable id='iframe_comments' var='post'/>
+            <b:includable id='inlineAd' var='post'>
+  <b:if cond='!data:view.isPreview'>
+    <b:if cond='data:this.adCode or data:this.adClientId or data:blog.adsenseClientId'>
+      <!-- Ad -->
+      <div class='inline-ad'>
+        <b:if cond='data:this.adCode != &quot;&quot;'>
+          <data:this.adCode/>
+        <b:else/>
+          <b:include cond='data:this.adClientId or data:blog.adsenseClientId' name='defaultAdUnit'/>
+        </b:if>
+      </div>
+    </b:if>
+  <b:else/>
+    <div class='inline-ad'>
+      <div class='inline-ad-placeholder'>
+        <span><b:message name='messages.adsGoHere'/></span>
+      </div>
+    </div>
+  </b:if>
+</b:includable>
+            <b:includable id='mobile-index-post' var='post'/>
+            <b:includable id='mobile-main' var='top'/>
+            <b:includable id='mobile-nextprev'/>
+            <b:includable id='mobile-post' var='post'/>
+            <b:includable id='nextPageLink'>
+  <a class='blog-pager-older-link' expr:href='data:olderPageUrl' expr:id='data:widget.instanceId + &quot;_blog-pager-older-link&quot;' expr:title='data:messages.olderPosts'>
+    <data:messages.olderPosts/>
+  </a>
+</b:includable>
+            <b:includable id='nextprev'>
+                  <b:if cond='data:olderPageUrl or data:newerPageUrl'>
+                  <nav aria-label='Blog pagination' class='blog-pager' id='blog-pager'>
+                    <b:if cond='data:newerPageUrl'>
+                      <a class='newer-link' expr:href='data:newerPageUrl' expr:title='data:newerPageTitle' rel='prev'>
+                        <i aria-hidden='true' class='fas fa-arrow-left'/> Newer Posts
+                      </a>
+                    </b:if>
+
+                    <b:if cond='data:view.isHomepage'>
+                        <a class='home-link' expr:href='data:blog.homepageUrl' title='Go to Homepage'>
+                          <i aria-hidden='true' class='fas fa-home'/> Home
+                        </a>
+                    </b:if>
+
+                    <b:if cond='data:olderPageUrl'>
+                      <a class='older-link' expr:href='data:olderPageUrl' expr:title='data:olderPageTitle' rel='next'>
+                        Older Posts <i aria-hidden='true' class='fas fa-arrow-right'/>
+                      </a>
+                    </b:if>
+                  </nav>
+                  </b:if>
+            </b:includable>
+            <b:includable id='post' var='post'>
+                  <article class='manga-post-container' itemscope='itemscope' itemtype='http://schema.org/Article'>
+                    <meta expr:content='data:post.url.canonical' itemprop='mainEntityOfPage'/>
+                    <meta expr:content='data:post.timestampISO8601' itemprop='datePublished'/>
+                    <meta expr:content='data:post.lastUpdatedISO8601' itemprop='dateModified'/>
+                    <div itemprop='author' itemscope='itemscope' itemtype='https://schema.org/Person'>
+                      <meta expr:content='data:post.author.name' itemprop='name'/>
+                      <!-- Add author URL if available <meta expr:content='data:post.author.profileUrl' itemprop='url'/> -->
+                    </div>
+                    <div itemprop='publisher' itemscope='itemscope' itemtype='https://schema.org/Organization'>
+                      <meta expr:content='data:blog.title' itemprop='name'/>
+                      <div itemprop='logo' itemscope='itemscope' itemtype='https://schema.org/ImageObject'>
+                        <meta expr:content='data:blog.blogspotFaviconUrl' itemprop='url'/>
+                      </div>
+                    </div>
+
+
+                    <!-- Breadcrumbs -->
+                    <nav aria-label='breadcrumb' class='breadcrumbs'>
+                      <a expr:href='data:blog.homepageUrl'><i aria-hidden='true' class='fas fa-home'/> Home</a>
+                      <span class='separator'>/</span>
+                      <a href='/search/label/Manga'>Manga List</a>
+                      <span class='separator'>/</span>
+                      <span aria-current='page'>
+                          <!-- Show only series name in breadcrumb -->
+                          <b:with value='data:post.title where (p =&gt; p contains &quot; - Chapter &quot;)' var='titlePart'>
+                              <b:if cond='data:titlePart'>
+                                  <b:value-of expr='data:titlePart.split(&quot; - Chapter &quot;)[0]'/>
+                              <b:else/>
+                                  <data:post.title/>
+                              </b:if>
+                          </b:with>
+                       </span>
+                    </nav>
+
+                    <!-- Info Grid -->
+                    <div class='manga-info-grid'>
+                      <!-- Left Column: Cover & Rating -->
+                      <div class='manga-info-left'>
+                        <div class='manga-cover' itemprop='image' itemscope='itemscope' itemtype='https://schema.org/ImageObject'>
+                           <b:with value='data:post.featuredImage.isResizable ? resizeImage(data:post.featuredImage, 350, &quot;3:4.2&quot;) : data:post.featuredImage' var='coverImg'>
+                               <b:if cond='data:coverImg'>
+                                    <img expr:alt='data:post.title + &quot; cover&quot;' expr:src='data:coverImg' itemprop='url' loading='lazy'/>
+                                    <meta expr:content='data:coverImg' itemprop='url'/>
+                                    <meta content='350' itemprop='width'/>
+                                    <meta content='490' itemprop='height'/>
+                               <b:else/>
+                                    <!-- Default image if no cover image found -->
+                                    <img alt='Default manga cover' itemprop='url' loading='lazy' src='https://via.placeholder.com/350x490/232731/4db6ff?text=Manga+Cover'/>
+                                     <meta content='https://via.placeholder.com/350x490/232731/4db6ff?text=Manga+Cover' itemprop='url'/>
+                                     <meta content='350' itemprop='width'/>
+                                     <meta content='490' itemprop='height'/>
+                               </b:if>
+                           </b:with>
+                        </div>
+                        <div class='manga-rating' itemprop='aggregateRating' itemscope='itemscope' itemtype='https://schema.org/AggregateRating'>
+                           <div aria-label='Rating: 4 out of 5 stars' class='stars'>
+                               <i aria-hidden='true' class='fas fa-star'/>
+                               <i aria-hidden='true' class='fas fa-star'/>
+                               <i aria-hidden='true' class='fas fa-star'/>
+                               <i aria-hidden='true' class='fas fa-star'/>
+                               <i aria-hidden='true' class='far fa-star'/>
+                           </div>
+                           <div class='rating-text'>Rating: <span itemprop='ratingValue'>4.0</span>/<span itemprop='bestRating'>5</span> (<span itemprop='ratingCount'>125</span> reviews)</div> <!-- Placeholder counts -->
+                        </div>
+                      </div>
+
+                      <!-- Right Column: Meta Details -->
+                      <div class='manga-info-right'>
+                        <h1 class='manga-title-main' itemprop='headline'>
+                            <!-- Show only series name as main H1 -->
+                            <b:with value='data:post.title where (p =&gt; p contains &quot; - Chapter &quot;)' var='titlePart'>
+                                <b:if cond='data:titlePart'>
+                                    <b:value-of expr='data:titlePart.split(&quot; - Chapter &quot;)[0]'/>
+                                <b:else/>
+                                    <data:post.title/>
+                                </b:if>
+                            </b:with>
+                        </h1>
+
+                        <!-- Meta Items - Data sourced via JS from hidden meta or defaults -->
+                        <div class='manga-meta-item other-names'>
+                            <span aria-hidden='true' class='meta-icon'><i class='far fa-flag'/></span>
+                            <span class='meta-label'>Other names:</span>
+                            <span class='meta-value'><i aria-hidden='true' class='pulse'>Loading...</i></span>
+                        </div>
+                        <div class='manga-meta-item author'>
+                            <span aria-hidden='true' class='meta-icon'><i class='fas fa-user-edit'/></span>
+                            <span class='meta-label'>Author(s):</span>
+                            <span class='meta-value'><i aria-hidden='true' class='pulse'>Loading...</i></span>
+                        </div>
+                        <div class='manga-meta-item genres'>
+                            <span aria-hidden='true' class='meta-icon'><i class='fas fa-tags'/></span>
+                            <span class='meta-label'>Genre(s):</span>
+                            <span class='meta-value' itemprop='genre'>
+                                <b:if cond='data:post.labels'>
+                                    <b:loop values='data:post.labels where (l =&gt; l.name != &quot;Manga&quot; and l.name != &quot;Popular&quot; and l.name != &quot;Updated&quot;)' var='label'> <!-- Filter out utility labels -->
+                                        <a expr:href='data:label.url' rel='tag'><data:label.name/></a>
+                                    </b:loop>
+                                <b:else/>
+                                    <span>No genres specified</span>
+                                </b:if>
+                            </span>
+                        </div>
+                        <div class='manga-meta-item status'>
+                            <span aria-hidden='true' class='meta-icon'><i class='fas fa-signal'/></span>
+                            <span class='meta-label'>Status:</span>
+                            <span class='meta-value'><i aria-hidden='true' class='pulse'>Loading...</i></span>
+                        </div>
+                        <div class='manga-meta-item magazine'>
+                            <span aria-hidden='true' class='meta-icon'><i class='fas fa-book-open'/></span>
+                            <span class='meta-label'>Magazine:</span>
+                            <span class='meta-value'><i aria-hidden='true' class='pulse'>Loading...</i></span>
+                        </div>
+                        <div class='manga-meta-item views'>
+                            <span aria-hidden='true' class='meta-icon'><i class='fas fa-eye'/></span>
+                            <span class='meta-label'>Views:</span>
+                            <span class='meta-value'><span id='post-view-counter'>0</span></span>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class='manga-actions'>
+                            <button class='btn-action btn-bookmark' title='Bookmark this series' type='button'>
+                                <i aria-hidden='true' class='far fa-bookmark'/> <span class='btn-text'>Bookmark</span>
+                            </button>
+                            <a class='btn-action btn-read-latest' href='#' title='Read the latest chapter'>
+                                <i aria-hidden='true' class='fas fa-book-reader'/> Read Latest
+                            </a>
+                            <!-- Add First Chapter Button -->
+                             <a class='btn-action btn-read-first' href='#' title='Read the first chapter'>
+                                <i aria-hidden='true' class='fas fa-angle-double-left'/> Read First
+                            </a>
+                        </div>
+
+                      </div> <!-- End Right Column -->
+                    </div> <!-- End Info Grid -->
+
+                    <!-- Description Section -->
+                     <section aria-labelledby='description-heading' class='manga-description-section'>
+                         <h3 id='description-heading'><i aria-hidden='true' class='fas fa-info-circle'/> Description</h3>
+                         <div class='manga-description-content' itemprop='articleBody'>
+                             <!-- Main post body content is inserted here by Blogger -->
+                             <data:post.body/>
+                             <!-- Hidden Metadata will be appended here by JS if needed -->
+                         </div>
+                     </section>
+
+                    <!-- Chapters Section -->
+                    <section aria-labelledby='chapters-heading' class='manga-chapters-section'>
+                       <h3 id='chapters-heading'><i aria-hidden='true' class='fas fa-list'/> Chapters</h3>
+                       <!-- Container for chapter list to be filled by JS -->
+                        <div id='chapter-list-container'>
+                            <div class='text-center' style='padding: 30px 0;'>
+                                <div aria-hidden='true' class='loading-spinner'/>
+                                <p>Loading chapter list...</p>
+                            </div>
+                        </div>
+                    </section>
+
+                     <!-- Hidden Metadata Source (Extracted by JS from post.body or defaults) -->
+                     <!-- This div is crucial for the JS to find manga-specific info -->
+                     <!-- It should remain hidden via CSS -->
+                     <div class='manga-hidden-meta'>
+                         <div class='manga-meta-manga-label'><!-- JS will try to extract or generate this (e.g., from a label) --></div>
+                         <div class='manga-meta-other-names'><!-- JS tries to find this in post body --></div>
+                         <div class='manga-meta-author'><!-- JS tries to find this in post body --></div>
+                         <div class='manga-meta-status'><!-- JS tries to find this in post body (ongoing/completed) --></div>
+                         <div class='manga-meta-magazine'><!-- JS tries to find this in post body --></div>
+                     </div>
+
+                  </article> <!-- End manga-post-container -->
+
+                  <!-- Comments Section -->
+                  <b:include data='post' name='comments'/>
+            </b:includable>
+            <b:includable id='postBody' var='post'/>
+            <b:includable id='postBodySnippet' var='post'/>
+            <b:includable id='postCommentsAndAd' var='post'>
+  <article class='post-outer-container'>
+    <!-- Post title and body -->
+    <div class='post-outer'>
+      <b:include data='post' name='post'/>
+    </div>
+
+    <!-- Comments -->
+    <b:include cond='data:view.isSingleItem' data='post' name='commentPicker'/>
+
+    <!-- Show ad inside post container, after comments, if single item. -->
+    <b:include cond='data:view.isSingleItem and data:post.includeAd' data='post' name='inlineAd'/>
+  </article>
+
+  <!-- Show ad outside post container (between posts) for feed pages. -->
+  <b:include cond='data:view.isMultipleItems and data:post.includeAd' data='post' name='inlineAd'/>
+</b:includable>
+            <b:includable id='postCommentsLink'>
+  <b:if cond='data:view.isMultipleItems'>
+    <span class='byline post-comment-link container'>
+      <b:include cond='data:post.commentSource != 1' name='commentsLink'/>
+    </span>
+  </b:if>
+</b:includable>
+            <b:includable id='postFooter' var='post'/>
+            <b:includable id='postFooterAuthorProfile' var='post'>
+  <b:if cond='data:post.author.aboutMe and data:view.isPost'>
+    <div class='author-profile'>
+      <b:if cond='data:post.author.authorPhoto.url'>
+        <img class='author-image' expr:src='data:post.author.authorPhoto.url' width='50px'/>
+        <div class='author-about'>
+          <b:include data='post' name='aboutPostAuthor'/>
+        </div>
+      <b:else/>
+        <b:include data='post' name='aboutPostAuthor'/>
+      </b:if>
+    </div>
+  </b:if>
+</b:includable>
+            <b:includable id='postHeader' var='post'/>
+            <b:includable id='postLabels' var='post'/>
+            <b:includable id='postListItem' var='post'>
+                <article class='thumb-item-flow force-visible'>
+                    <a class='thumb-wrapper' expr:href='data:post.url' expr:title='data:post.title'>
+                        <div class='a6-ratio'>
+                            <b:with value='data:post.featuredImage.isResizable ? resizeImage(data:post.featuredImage, 350, &quot;3:4.2&quot;) : data:post.featuredImage' var='thumb'>
+                                <b:if cond='data:thumb'>
+                                    <div class='content' expr:aria-label='data:post.title + &quot; Cover&quot;' expr:style='&quot;background-image: url(&quot; + data:thumb + &quot;);&quot;' role='img'/>
+                                <b:else/>
+                                    <!-- Default placeholder if no image -->
+                                    <div aria-label='Default manga cover' class='content placeholder' role='img'>
+                                        <span><data:blog.title/></span>
+                                    </div>
+                                </b:if>
+                            </b:with>
+                        </div>
+                    </a>
+                    <div class='manga-badge'>
+                        <span class='badge badge-info'>
+                            <i aria-hidden='true' class='far fa-clock'/>
+                            <time class='timeago' expr:datetime='data:post.timestamp' expr:title='data:post.timestamp'><data:post.timestamp/></time>
+                        </span>
+                    </div>
+                    <div class='thumb_attr'>
+                        <!-- Chapter Title Logic -->
+                        <a class='chapter-title' expr:href='data:post.url'>
+                            <b:with value='data:post.title where (p =&gt; p contains &quot; - Chapter &quot;)' var='chapterPart'>
+                                <b:if cond='data:chapterPart'>
+                                    <b:value-of expr='data:chapterPart.split(&quot; - Chapter &quot;)[1]'/> <!-- Show only chapter number/name -->
+                                <b:else/>
+                                    View Details
+                                </b:if>
+                            </b:with>
+                        </a>
+                        <!-- Series Title Logic -->
+                        <h3 class='series-title'>
+                            <a expr:href='data:post.url' expr:title='data:post.title'>
+                                <b:with value='data:post.title where (p =&gt; p contains &quot; - Chapter &quot;)' var='titlePart'>
+                                    <b:if cond='data:titlePart'>
+                                        <b:value-of expr='data:titlePart.split(&quot; - Chapter &quot;)[0]'/> <!-- Show only series name -->
+                                    <b:else/>
+                                        <data:post.title/> <!-- Show full title if no chapter format -->
+                                    </b:if>
+                                </b:with>
+                            </a>
+                        </h3>
+                    </div>
+                </article>
+            </b:includable>
+            <b:includable id='postMeta' var='post'>
+  <b:include data='post' name='postMetadataJSON'/>
+</b:includable>
+            <b:includable id='postPagination'>
+  <div class='blog-pager container' id='blog-pager'>
+    <b:include cond='data:newerPageUrl' name='previousPageLink'/>
+    <b:include cond='data:olderPageUrl' name='nextPageLink'/>
+    <b:include cond='data:view.url != data:blog.homepageUrl' name='homePageLink'/>
+  </div>
+</b:includable>
+            <b:includable id='postQuickEdit' var='post'/>
+            <b:includable id='postShareButtons' var='post'/>
+            <b:includable id='postTitle' var='post'>
+  <a expr:name='data:post.id'/>
+  <b:if cond='data:post.title != &quot;&quot;'>
+    <h3 class='post-title entry-title'>
+      <b:if cond='data:post.link or (data:post.url and data:view.url != data:post.url)'>
+        <a expr:href='data:post.link ?: data:post.url'><data:post.title/></a>
+      <b:else/>
+        <data:post.title/>
+      </b:if>
+    </h3>
+  </b:if>
+</b:includable>
+            <b:includable id='previousPageLink'>
+  <a class='blog-pager-newer-link' expr:href='data:newerPageUrl' expr:id='data:widget.instanceId + &quot;_blog-pager-newer-link&quot;' expr:title='data:messages.newerPosts'>
+    <data:messages.newerPosts/>
+  </a>
+</b:includable>
+            <b:includable id='shareButtons' var='post'/>
+            <b:includable id='status-message'/>
+            <b:includable id='threaded-comment-form' var='post'/>
+            <b:includable id='threadedCommentForm' var='post'>
+  <div class='comment-form'>
+    <a name='comment-form'/>
+    <h4 id='comment-post-message'><data:messages.postAComment/></h4>
+    <b:if cond='data:this.messages.blogComment != &quot;&quot;'>
+      <p><data:this.messages.blogComment/></p>
+    </b:if>
+    <b:include data='post' name='commentFormIframeSrc'/>
+    <iframe allowtransparency='allowtransparency' class='blogger-iframe-colorize blogger-comment-from-post' expr:height='data:cmtIframeInitialHeight ?: &quot;90px&quot;' frameborder='0' id='comment-editor' name='comment-editor' src='' width='100%'/>
+    <data:post.cmtfpIframe/>
+    <script type='text/javascript'>
+      BLOG_CMT_createIframe(&#39;<data:post.appRpcRelayPath/>&#39;);
+    </script>
+  </div>
+</b:includable>
+            <b:includable id='threadedCommentJs' var='post'>
+  <script async='async' expr:src='data:post.commentSrc' type='text/javascript'/>
+  <b:template-script inline='true' name='threaded_comments'/>
+  <script type='text/javascript'>
+    blogger.widgets.blog.initThreadedComments(
+        <data:post.commentJso/>,
+        <data:post.commentMsgs/>,
+        <data:post.commentConfig/>);
+  </script>
+</b:includable>
+            <b:includable id='threadedComments' var='post'>
+  <section class='comments threaded' expr:data-embed='data:post.embedCommentForm' expr:data-num-comments='data:post.numberOfComments' id='comments'>
+    <a name='comments'/>
+
+    <b:include name='commentsTitle'/>
+
+    <div class='comments-content'>
+      <b:if cond='data:post.embedCommentForm'>
+        <b:include data='post' name='threadedCommentJs'/>
+      </b:if>
+      <div id='comment-holder'>
+         <data:post.commentHtml/>
+      </div>
+    </div>
+
+    <p class='comment-footer'>
+      <b:if cond='data:post.allowNewComments'>
+        <b:include data='post' name='threadedCommentForm'/>
+      <b:else/>
+        <data:post.noNewCommentsText/>
+      </b:if>
+      <b:if cond='data:post.showManageComments'>
+        <b:include data='post' name='manageComments'/>
+      </b:if>
+    </p>
+
+    <b:if cond='data:showCmtPopup'>
+      <div id='comment-popup'>
+        <iframe allowtransparency='allowtransparency' frameborder='0' id='comment-actions' name='comment-actions' scrolling='no'>
+        </iframe>
+      </div>
+    </b:if>
+  </section>
+</b:includable>
+            <b:includable id='threaded_comment_js' var='post'/>
+            <b:includable id='threaded_comments' var='post'/>
+          </b:widget>
+        </b:section>
+    </main> <!-- End #content -->
+
+    <!-- Footer with multiple columns -->
+    <footer class='footer' role='contentinfo'>
+        <div class='footer-content'>
+            <div class='footer-column about-column'>
+                <h4>About <data:blog.title/></h4>
+                <p>Your premier destination for reading the latest manga chapters online. High-quality scans, fast updates, and a vast library await you.</p>
+                <div class='social-icons mt-30'>
+                    <a aria-label='Facebook' href='#' rel='noopener noreferrer' target='_blank'><i aria-hidden='true' class='fab fa-facebook-f'/></a>
+                    <a aria-label='Twitter' href='#' rel='noopener noreferrer' target='_blank'><i aria-hidden='true' class='fab fa-twitter'/></a>
+                    <a aria-label='Discord' href='#' rel='noopener noreferrer' target='_blank'><i aria-hidden='true' class='fab fa-discord'/></a>
+                    <a aria-label='Instagram' href='#' rel='noopener noreferrer' target='_blank'><i aria-hidden='true' class='fab fa-instagram'/></a>
+                </div>
+            </div>
+
+            <div class='footer-column links-column'>
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a expr:href='data:blog.homepageUrl'><i aria-hidden='true' class='fas fa-angle-right'/> Home</a></li>
+                    <li><a href='/search/label/Manga'><i aria-hidden='true' class='fas fa-angle-right'/> Manga List</a></li>
+                    <li><a href='/search/label/Popular?max-results=12'><i aria-hidden='true' class='fas fa-angle-right'/> Popular Manga</a></li>
+                    <li><a expr:href='data:blog.homepageUrl + &quot;?max-results=24&quot;'><i aria-hidden='true' class='fas fa-angle-right'/> Latest Updates</a></li>
+                    <li><a href='/search/label/Genres'><i aria-hidden='true' class='fas fa-angle-right'/> Browse by Genre</a></li>
+                     <li><a href='/p/dmca.html'><i aria-hidden='true' class='fas fa-angle-right'/> DMCA</a></li> <!-- Example static page -->
+                </ul>
+            </div>
+
+            <div class='footer-column genres-column'>
+                <h4>Top Genres</h4>
+                 <!-- Consider making this dynamic if possible, or update manually -->
+                <ul>
+                    <li><a href='/search/label/Action'><i aria-hidden='true' class='fas fa-angle-right'/> Action</a></li>
+                    <li><a href='/search/label/Romance'><i aria-hidden='true' class='fas fa-angle-right'/> Romance</a></li>
+                    <li><a href='/search/label/Comedy'><i aria-hidden='true' class='fas fa-angle-right'/> Comedy</a></li>
+                    <li><a href='/search/label/Fantasy'><i aria-hidden='true' class='fas fa-angle-right'/> Fantasy</a></li>
+                    <li><a href='/search/label/Drama'><i aria-hidden='true' class='fas fa-angle-right'/> Drama</a></li>
+                    <li><a href='/search/label/Adventure'><i aria-hidden='true' class='fas fa-angle-right'/> Adventure</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class='footer-bottom'>
+            <p>&#169; <script>document.write(new Date().getFullYear())</script> <a expr:href='data:blog.homepageUrl'><data:blog.title/></a> - All Rights Reserved.</p>
+            <p>Disclaimer: This site does not store any files on its server. All contents are provided by non-affiliated third parties.</p>
+             <!-- Optional: Theme attribution -->
+             <!-- <p>Theme by [Your Name/Link] | Powered by <a href='https://www.blogger.com' rel='noopener noreferrer' target='_blank'>Blogger</a></p> -->
+        </div>
+    </footer>
+
+    <!-- JavaScript Code -->
+    <script type='text/javascript'>
+//<![CDATA[
+/**
+ * Manga Clean Theme v4 JavaScript
+ * Handles mobile navigation, sliders, manga details loading, chapters, bookmarks, etc.
+ */
+document.addEventListener('DOMContentLoaded', function() {
+    console.log("Manga Theme JS Loaded");
+
+    // Initialize Mobile Navigation
+    initMobileNav();
+
+    // Initialize Debug Info (for admin)
+    initDebugInfo();
+
+    // Initialize Popular Slider (Always runs, adds demo if needed)
+    initPopularSlider();
+
+    // Initialize Manga Details Page Specific Functions
+    if (document.querySelector('.manga-post-container')) {
+        console.log("Manga details page detected");
+        loadMangaDetails();
+    }
+
+    // Initialize Timeago for all relevant timestamps
+    if (typeof timeago !== 'undefined') {
+        timeago.render(document.querySelectorAll('.timeago'), 'en_US'); // Specify locale if needed
+        console.log("Timeago initialized");
+    } else {
+        console.warn("Timeago library not found");
+    }
+
+    // Check if sample posts need to be shown (only if no posts rendered)
+    // This depends on the debug check confirming zero posts
+    // initSamplePostsIfNeeded(); // Called within initDebugInfo
+
+    // Update bookmark button state on page load
+    updateBookmarkButtonState();
+
+}); // End DOMContentLoaded
+
+// --- Navigation ---
+function initMobileNav() {
+    const mobileToggle = document.querySelector('.mobile-nav-toggle');
+    const nav = document.getElementById('main-nav');
+
+    if (!mobileToggle || !nav) {
+        console.warn("Mobile nav elements not found.");
+        return;
+    }
+
+    mobileToggle.addEventListener('click', function() {
+        const isExpanded = nav.classList.toggle('active');
+        mobileToggle.setAttribute('aria-expanded', isExpanded);
+        console.log("Mobile nav toggled:", isExpanded);
+    });
+
+    // Close mobile menu when clicking outside
+    document.addEventListener('click', function(event) {
+        if (nav.classList.contains('active') &&
+            !nav.contains(event.target) &&
+            !mobileToggle.contains(event.target))
+        {
+            nav.classList.remove('active');
+            mobileToggle.setAttribute('aria-expanded', 'false');
+            console.log("Mobile nav closed by outside click");
+        }
+    });
+}
+
+// --- Debugging ---
+function initDebugInfo() {
+    // Check if debug elements exist (likely only for admin)
+    const renderedCountEl = document.getElementById('post-count-rendered');
+    if (!renderedCountEl) return; // Not admin or debug section removed
+
+    // Count posts rendered in the main grid
+    const postItems = document.querySelectorAll('.row-last-update .thumb-item-flow');
+    renderedCountEl.textContent = postItems.length;
+    console.log(`Debug: Rendered posts in grid: ${postItems.length}`);
+
+    // If zero posts rendered, maybe show samples (if desired and container exists)
+    if (postItems.length === 0 && document.getElementById('sample-posts-container')) {
+        // initSamplePosts(); // Uncomment to enable sample posts when blog is empty
+        console.log("Debug: No posts rendered, sample posts could be shown here.");
+    }
+
+    // Fill other debug info
+    const imagesFoundEl = document.getElementById('images-found');
+    if (imagesFoundEl) {
+        const imagesInPosts = document.querySelectorAll('.thumb-item-flow .a6-ratio .content');
+        let withBg = 0;
+        imagesInPosts.forEach(img => {
+            if (img.style.backgroundImage && img.style.backgroundImage !== 'none' && !img.classList.contains('placeholder')) {
+                withBg++;
+            }
+        });
+        imagesFoundEl.textContent = `${withBg} / ${imagesInPosts.length}`;
+    }
+
+    const browserInfoEl = document.getElementById('browser-info');
+    if (browserInfoEl) {
+        browserInfoEl.textContent = navigator.userAgent;
+    }
+}
+
+// --- Popular Manga Slider ---
+function initPopularSlider() {
+    const slider = document.getElementById('popular-slider');
+    const sliderNav = document.querySelector('.slider-navigation'); // Container for buttons/dots
+    if (!slider || !sliderNav) {
+        console.warn("Popular slider container or navigation not found.");
+        return;
+    }
+
+    // Clear any initial loading spinner
+    const spinner = slider.querySelector('.loading-spinner');
+    if (spinner) slider.removeChild(spinner);
+
+    // --- Add Sample/Demo Data ---
+    // Check if the slider is empty. If so, add demo items.
+    // In a real scenario, you might fetch posts with a 'Popular' label here instead.
+    if (slider.children.length === 0) {
+        console.log("Popular slider is empty, adding demo items.");
+        const popularManga = [
+            { title: "One Punch Man", cover: "https://via.placeholder.com/200x280/1E212A/4DB6FF?text=One+Punch+Man", url: "#" },
+            { title: "Solo Leveling", cover: "https://via.placeholder.com/200x280/1E212A/4DB6FF?text=Solo+Leveling", url: "#" },
+            { title: "Jujutsu Kaisen", cover: "https://via.placeholder.com/200x280/1E212A/4DB6FF?text=Jujutsu+Kaisen", url: "#" },
+            { title: "My Hero Academia", cover: "https://via.placeholder.com/200x280/1E212A/4DB6FF?text=MHA", url: "#" },
+            { title: "Demon Slayer", cover: "https://via.placeholder.com/200x280/1E212A/4DB6FF?text=Demon+Slayer", url: "#" },
+            { title: "Attack on Titan", cover: "https://via.placeholder.com/200x280/1E212A/4DB6FF?text=AoT", url: "#" },
+            { title: "Chainsaw Man", cover: "https://via.placeholder.com/200x280/1E212A/4DB6FF?text=Chainsaw+Man", url: "#" },
+            { title: "Spy x Family", cover: "https://via.placeholder.com/200x280/1E212A/4DB6FF?text=Spy+Family", url: "#" }
+        ];
+
+        popularManga.forEach(manga => {
+            const item = document.createElement('div');
+            item.className = 'popular-thumb-item';
+            item.innerHTML = `
+                <a class="thumb-wrapper" href="${manga.url}" title="${manga.title}">
+                    <div class="a6-ratio">
+                        <div class="content" style="background-image: url(${manga.cover});" role="img" aria-label="${manga.title} Cover"></div>
+                    </div>
+                </a>
+                <div class="thumb_attr">
+                    <h3 class="series-title">
+                        <a href="${manga.url}" title="${manga.title}">${manga.title}</a>
+                    </h3>
+                </div>`;
+            slider.appendChild(item);
+        });
+    }
+
+    // --- Slider Controls Logic ---
+    const prevBtn = sliderNav.querySelector('.prev-button');
+    const nextBtn = sliderNav.querySelector('.next-button');
+    const dotsContainer = sliderNav.querySelector('.slider-dots');
+
+    if (!prevBtn || !nextBtn || !dotsContainer) {
+        console.warn("Slider navigation controls (buttons or dots container) not found.");
+        return;
+    }
+
+    let currentSlide = 0;
+    const items = slider.querySelectorAll('.popular-thumb-item');
+    const totalItems = items.length;
+    if (totalItems === 0) {
+         sliderNav.style.display = 'none'; // Hide nav if no items
+         return;
+    }
+
+    // Calculate items per view dynamically (approximate)
+    const itemWidth = items[0].offsetWidth + parseInt(getComputedStyle(items[0]).marginRight || '0'); // Width + gap
+    const itemsPerView = Math.max(1, Math.floor(slider.offsetWidth / itemWidth));
+    const totalSlides = Math.max(1, Math.ceil(totalItems / itemsPerView));
+
+    // Generate dots
+    dotsContainer.innerHTML = ''; // Clear existing dots
+    for (let i = 0; i < totalSlides; i++) {
+        const dot = document.createElement('button');
+        dot.className = 'dot';
+        dot.setAttribute('role', 'tab');
+        dot.setAttribute('aria-label', `Go to slide ${i + 1}`);
+        dot.setAttribute('aria-selected', i === 0 ? 'true' : 'false');
+        if (i === 0) dot.classList.add('active');
+        dot.addEventListener('click', () => navigateToSlide(i));
+        dotsContainer.appendChild(dot);
+    }
+    const dots = dotsContainer.querySelectorAll('.dot');
+
+    function updateDots(activeIndex) {
+        dots.forEach((dot, i) => {
+            dot.classList.toggle('active', i === activeIndex);
+            dot.setAttribute('aria-selected', i === activeIndex ? 'true' : 'false');
+        });
+    }
+
+    function navigateToSlide(slideIndex) {
+        currentSlide = Math.max(0, Math.min(slideIndex, totalSlides - 1));
+        const scrollAmount = currentSlide * (slider.scrollWidth / totalSlides); // More precise scroll
+        slider.scrollTo({ left: scrollAmount, behavior: 'smooth' });
+        updateDots(currentSlide);
+    }
+
+    prevBtn.addEventListener('click', () => navigateToSlide(currentSlide - 1));
+    nextBtn.addEventListener('click', () => navigateToSlide(currentSlide + 1));
+
+    // Update dots on manual scroll (debounced)
+    slider.addEventListener('scroll', debounce(() => {
+        const scrollRatio = slider.scrollLeft / (slider.scrollWidth - slider.clientWidth);
+        const newSlide = Math.round(scrollRatio * (totalSlides - 1));
+        if (newSlide !== currentSlide && !isNaN(newSlide)) {
+            currentSlide = newSlide;
+            updateDots(currentSlide);
+        }
+    }, 150));
+
+    console.log(`Popular slider initialized: ${totalItems} items, ${itemsPerView} per view, ${totalSlides} slides.`);
+}
+
+// --- Manga Detail Page Logic ---
+function loadMangaDetails() {
+    console.log("Executing loadMangaDetails");
+    try {
+        // 1. Attempt to locate or create the hidden metadata container
+        let hiddenMetaContainer = document.querySelector('.manga-hidden-meta');
+        const postBodyContainer = document.querySelector('.manga-description-content');
+
+        if (!hiddenMetaContainer && postBodyContainer) {
+            console.log("Hidden meta div not found, attempting to create and extract from body.");
+            hiddenMetaContainer = document.createElement('div');
+            hiddenMetaContainer.className = 'manga-hidden-meta';
+            // Append temporarily to extract, then hide properly
+            postBodyContainer.appendChild(hiddenMetaContainer);
+            extractMetadataFromBody(postBodyContainer, hiddenMetaContainer);
+            // Ensure it's hidden correctly after extraction attempt
+            hiddenMetaContainer.style.display = 'none';
+            hiddenMetaContainer.style.visibility = 'hidden';
+            hiddenMetaContainer.style.position = 'absolute';
+            hiddenMetaContainer.style.left = '-9999px';
+
+        } else if (!hiddenMetaContainer) {
+             console.error("Cannot find or create manga metadata container.");
+             fillMetaWithDefaults(); // Use defaults if extraction fails completely
+             return;
+        }
+
+        // 2. Get values from the (now hopefully existing) hidden meta
+        const getMetaValue = (selector) => hiddenMetaContainer.querySelector(selector)?.textContent.trim() || null;
+
+        const otherNamesVal = getMetaValue('.manga-meta-other-names');
+        const authorVal = getMetaValue('.manga-meta-author');
+        const statusVal = getMetaValue('.manga-meta-status')?.toLowerCase();
+        const magazineVal = getMetaValue('.manga-meta-magazine');
+        let mangaLabel = getMetaValue('.manga-meta-manga-label');
+
+        // 3. If mangaLabel is missing, try to generate it from title or labels
+        if (!mangaLabel) {
+            mangaLabel = generateMangaLabel();
+            if (mangaLabel) {
+                console.log("Generated manga label:", mangaLabel);
+                // Optionally store it back in the hidden div if needed elsewhere
+                const labelDiv = document.createElement('div');
+                labelDiv.className = 'manga-meta-manga-label';
+                labelDiv.textContent = mangaLabel;
+                hiddenMetaContainer.appendChild(labelDiv);
+            }
+        }
+
+        console.log("Meta values found:", { otherNamesVal, authorVal, statusVal, magazineVal, mangaLabel });
+
+        // 4. Fill visible metadata elements with fallbacks
+        updateMetaElement('.manga-meta-item.other-names .meta-value', otherNamesVal || 'N/A');
+        updateMetaElement('.manga-meta-item.author .meta-value', authorVal || 'Unknown');
+
+        const statusElement = document.querySelector('.manga-meta-item.status .meta-value');
+        if (statusElement) {
+            if (statusVal === 'ongoing' || statusVal === 'on going') {
+                statusElement.innerHTML = `<span class='status-badge ongoing'>On going</span>`;
+            } else if (statusVal === 'completed') {
+                statusElement.innerHTML = `<span class='status-badge completed'>Completed</span>`;
+            } else {
+                statusElement.textContent = statusVal ? capitalizeFirstLetter(statusVal) : 'Unknown';
+            }
+        }
+
+        const magazineElement = document.querySelector('.manga-meta-item.magazine .meta-value');
+        if (magazineElement) {
+            if (magazineVal && magazineVal !== 'N/A') {
+                magazineElement.innerHTML = `<span class='magazine-badge'>${magazineVal}</span>`;
+            } else {
+                magazineElement.textContent = 'N/A';
+            }
+        }
+
+        // 5. Load chapter list using the determined mangaLabel
+        if (mangaLabel) {
+            loadChapterList(mangaLabel);
+        } else {
+            console.warn("Manga label could not be determined. Cannot load chapter list.");
+            const container = document.getElementById('chapter-list-container');
+            if (container) {
+                container.innerHTML = '<p class="text-center" style="padding: 15px;">Could not identify manga series to load chapters.</p>';
+            }
+            // Disable read buttons if no chapters
+            disableReadButtons();
+        }
+
+        // 6. Initialize view counter (placeholder)
+        incrementViewCounter();
+
+    } catch (error) {
+        console.error('Error in loadMangaDetails:', error);
+        fillMetaWithDefaults(); // Fallback in case of any error
+        disableReadButtons();
+    }
+}
+
+// Helper function to extract metadata from post body (example implementation)
+function extractMetadataFromBody(bodyContainer, metaContainer) {
+    if (!bodyContainer || !metaContainer) return;
+    console.log("Attempting extraction from body content...");
+
+    const bodyText = bodyContainer.innerText || bodyContainer.textContent;
+
+    // VERY Simple Example Extraction Logic (Needs Adjustment based on actual post format)
+    const extract = (regex, className) => {
+        const match = bodyText.match(regex);
+        const value = match ? match[1].trim() : null;
+        if (value) {
+            const div = document.createElement('div');
+            div.className = className;
+            div.textContent = value;
+            metaContainer.appendChild(div);
+            console.log(`Extracted ${className}: ${value}`);
+            // Optionally remove the source line from visible body (be careful!)
+             // bodyContainer.innerHTML = bodyContainer.innerHTML.replace(match[0], '');
+        }
+        return value;
+    };
+
+    extract(/Author\(s\):\s*(.*)/i, 'manga-meta-author');
+    extract(/Other Names?:\s*(.*)/i, 'manga-meta-other-names');
+    extract(/Status:\s*(Ongoing|Completed|On Going)/i, 'manga-meta-status');
+    extract(/Magazine:\s*(.*)/i, 'manga-meta-magazine');
+
+    // Label extraction might still need generation logic if not in body
+}
+
+// Helper function to generate a likely manga label
+function generateMangaLabel() {
+     // 1. Try specific label (e.g., prefixed like "Series: One Piece")
+     const labels = Array.from(document.querySelectorAll('.manga-meta-item.genres .meta-value a'));
+     const seriesLabel = labels.find(a => a.textContent.toLowerCase().startsWith('series:'));
+     if (seriesLabel) {
+         return seriesLabel.textContent.substring(7).trim().toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+     }
+
+     // 2. Try generating from H1 title
+     const titleElement = document.querySelector('.manga-title-main');
+     if (titleElement) {
+         const titleText = titleElement.textContent.trim();
+         // Simple generation: lowercase, replace space with dash, remove special chars
+         return 'manga-' + titleText.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+     }
+
+     return null; // Cannot generate label
+}
+
+// Helper to update metadata elements safely
+function updateMetaElement(selector, value) {
+    const element = document.querySelector(selector);
+    if (element) {
+        element.textContent = value; // Replace loading pulse
+    } else {
+        console.warn(`Meta element not found: ${selector}`);
+    }
+}
+
+// Fallback if metadata loading fails
+function fillMetaWithDefaults() {
+    console.warn("Filling metadata with default values due to error or missing info.");
+    updateMetaElement('.manga-meta-item.other-names .meta-value', 'N/A');
+    updateMetaElement('.manga-meta-item.author .meta-value', 'Unknown');
+    updateMetaElement('.manga-meta-item.status .meta-value', 'Unknown');
+    updateMetaElement('.manga-meta-item.magazine .meta-value', 'N/A');
+
+    const chapterContainer = document.getElementById('chapter-list-container');
+    if (chapterContainer) {
+        chapterContainer.innerHTML = '<p class="text-center" style="padding: 15px;">Chapter list unavailable.</p>';
+    }
+}
+
+// Disable Read First/Latest buttons
+function disableReadButtons() {
+    const readLatestBtn = document.querySelector('.btn-read-latest');
+    const readFirstBtn = document.querySelector('.btn-read-first');
+    if (readLatestBtn) {
+        readLatestBtn.style.opacity = '0.5';
+        readLatestBtn.style.pointerEvents = 'none';
+        readLatestBtn.href = '#';
+    }
+     if (readFirstBtn) {
+        readFirstBtn.style.opacity = '0.5';
+        readFirstBtn.style.pointerEvents = 'none';
+         readFirstBtn.href = '#';
+    }
+}
+
+
+// --- Chapter List Loading ---
+function loadChapterList(label) {
+    const container = document.getElementById('chapter-list-container');
+    if (!container || !label) {
+         console.error("Chapter list container or label missing.");
+         return;
+    }
+    console.log(`Loading chapters for label: ${label}`);
+
+    // Construct Feed URL: Fetch posts with the specific manga label
+    // Ensure posts are tagged correctly (e.g., "One Piece", "manga-one-piece")
+    const feedUrl = `/feeds/posts/default/-/${label}?alt=json-in-script&max-results=500&orderby=published`;
+    const callbackName = 'displayChapters_' + label.replace(/[^a-zA-Z0-9_]/g, ''); // Sanitize callback name
+
+    // Show loading spinner
+    container.innerHTML = `<div class='loading-spinner' aria-label='Loading chapters'></div>`;
+
+    let scriptTag = null; // Reference to the script tag
+    const timeoutDuration = 15000; // 15 seconds timeout
+
+    // Timeout handler
+    const timeoutId = setTimeout(() => {
+        console.error(`Timeout loading chapters for ${label}`);
+        container.innerHTML = '<p class="text-center" style="padding:15px; color:#f88;">Could not load chapters (Timeout).</p>';
+        cleanupJsonp(callbackName, scriptTag);
+        disableReadButtons();
+    }, timeoutDuration);
+
+    // Define JSONP callback globally
+    window[callbackName] = function(json) {
+        clearTimeout(timeoutId); // Clear timeout on success
+        console.log(`Received chapter data for ${label}`);
+
+        try {
+            if (json.feed && json.feed.entry && json.feed.entry.length > 0) {
+                // Sort entries: Blogger feed is usually newest first, but we sort just in case
+                const sortedEntries = json.feed.entry.sort((a, b) => {
+                    // Preferentially sort by title number if possible
+                    const numA = extractChapterNumber(a.title.$t);
+                    const numB = extractChapterNumber(b.title.$t);
+                    if (numA !== null && numB !== null) {
+                        return numB - numA; // Higher number first
+                    }
+                    // Fallback to published date if numbers aren't comparable
+                    const dateA = new Date(a.published.$t).getTime();
+                    const dateB = new Date(b.published.$t).getTime();
+                    return dateB - dateA; // Newest date first
+                });
+
+                let chaptersHtml = '<ul>';
+                let latestChapterUrl = '#';
+                let firstChapterUrl = '#';
+
+                if (sortedEntries.length > 0) {
+                    latestChapterUrl = sortedEntries[0].link.find(link => link.rel === 'alternate')?.href || '#';
+                    firstChapterUrl = sortedEntries[sortedEntries.length - 1].link.find(link => link.rel === 'alternate')?.href || '#';
+                }
+
+
+                sortedEntries.forEach(entry => {
+                    const postTitle = entry.title.$t;
+                    const postUrl = entry.link.find(link => link.rel === 'alternate')?.href || '#';
+                    const publishedDate = entry.published.$t;
+                    // Extract chapter name/number more reliably
+                    const chapterDisplay = formatChapterTitle(postTitle);
+
+                    chaptersHtml += `
+                        <li>
+                            <a href="${postUrl}">${chapterDisplay}</a>
+                            <time class='chapter-time timeago' datetime='${publishedDate}' title='${new Date(publishedDate).toLocaleString()}'>${publishedDate}</time>
+                        </li>`;
+                });
+
+                chaptersHtml += '</ul>';
+                container.innerHTML = chaptersHtml;
+
+                // Update "Read" buttons
+                updateReadButton('.btn-read-latest', latestChapterUrl);
+                updateReadButton('.btn-read-first', firstChapterUrl);
+
+
+                // Initialize timeago AFTER list is rendered
+                if (typeof timeago !== 'undefined') {
+                    timeago.render(container.querySelectorAll('.timeago'));
+                } else {
+                     console.warn("Timeago not available for chapter list");
+                }
+            } else {
+                console.warn(`No chapters found in feed for label: ${label}`);
+                container.innerHTML = '<p class="text-center" style="padding:15px;">No chapters found for this series yet.</p>';
+                disableReadButtons();
+            }
+        } catch (error) {
+            console.error('Error processing chapter data:', error);
+            container.innerHTML = '<p class="text-center" style="padding:15px; color:#f88;">Error displaying chapters.</p>';
+            disableReadButtons();
+        } finally {
+            cleanupJsonp(callbackName, scriptTag); // Clean up after processing
+        }
+    };
+
+    // Create and append JSONP script tag
+    scriptTag = document.createElement('script');
+    scriptTag.id = 'jsonp-' + callbackName;
+    scriptTag.src = feedUrl + '&callback=' + callbackName;
+    scriptTag.onerror = function() {
+        clearTimeout(timeoutId); // Clear timeout on error
+        console.error(`Failed to load chapter feed script for ${label}`);
+        container.innerHTML = '<p class="text-center" style="padding:15px; color:#f88;">Failed to load chapters feed.</p>';
+        cleanupJsonp(callbackName, scriptTag); // Clean up on error
+        disableReadButtons();
+    };
+    document.body.appendChild(scriptTag);
+    console.log(`Requesting chapters: ${scriptTag.src}`);
+}
+
+// Helper to extract chapter number for sorting
+function extractChapterNumber(title) {
+    // Try various patterns (e.g., "Chapter 123", "Ch. 123.5", "Vol.10 Ch.45")
+    const patterns = [
+        /Chapter\s+(\d+(\.\d+)?)/i,
+        /Ch\.\s*(\d+(\.\d+)?)/i,
+        /\s(\d+(\.\d+)?)$/ // Number at the end
+    ];
+    for (const pattern of patterns) {
+        const match = title.match(pattern);
+        if (match && match[1]) {
+            return parseFloat(match[1]);
+        }
+    }
+    return null; // Cannot extract number
+}
+
+// Helper to format chapter title for display
+function formatChapterTitle(title) {
+     // Remove the series name part if it exists (e.g., "One Piece - Chapter 1000")
+     if (title.includes(" - Chapter ")) {
+         return title.split(" - Chapter ")[1];
+     }
+     // Add more rules if needed based on your title format
+     return title; // Return original title as fallback
+}
+
+
+// Helper to update Read First/Latest buttons
+function updateReadButton(selector, url) {
+    const button = document.querySelector(selector);
+    if (button && url && url !== '#') {
+        button.href = url;
+        button.style.opacity = '1';
+        button.style.pointerEvents = 'auto';
+    } else if (button) {
+        // Disable button if URL is invalid
+        button.href = '#';
+        button.style.opacity = '0.5';
+        button.style.pointerEvents = 'none';
+         console.warn(`Could not set URL for button ${selector}`);
+    }
+}
+
+
+// Helper to clean up JSONP script and callback
+function cleanupJsonp(callbackName, scriptTag) {
+    console.log(`Cleaning up JSONP for ${callbackName}`);
+    // Remove the script tag from the DOM
+    if (scriptTag && scriptTag.parentNode) {
+        scriptTag.parentNode.removeChild(scriptTag);
+    }
+    // Remove the callback function from the global scope
+    try {
+        delete window[callbackName];
+    } catch (e) {
+        window[callbackName] = undefined; // Alternative for older browsers
+    }
+}
+
+// --- View Counter (Placeholder) ---
+function incrementViewCounter() {
+    const viewCounter = document.getElementById('post-view-counter');
+    if (!viewCounter) return;
+
+    // VERY Basic Counter: Uses localStorage, increments on each page load.
+    // Not accurate for unique views. A server-side solution is better.
+    const postId = window.location.pathname; // Use path as unique ID
+    const storageKey = `viewCount_${postId}`;
+    let viewCount = 0;
+
+    try {
+        viewCount = parseInt(localStorage.getItem(storageKey), 10) || 0;
+        // Add a random base for new posts to avoid starting at 1
+        if (viewCount === 0) {
+             viewCount = Math.floor(Math.random() * 150) + 50; // Start between 50-200
+        }
+        viewCount++;
+        viewCounter.textContent = viewCount.toLocaleString(); // Format with commas
+        localStorage.setItem(storageKey, viewCount.toString());
+    } catch (e) {
+        console.error("LocalStorage error (view counter):", e);
+        // Display a fallback if localStorage fails
+        viewCounter.textContent = 'N/A';
+    }
+}
+
+
+// --- Bookmarking (localStorage based) ---
+function updateBookmarkButtonState() {
+    const bookmarkBtn = document.querySelector('.btn-bookmark');
+    if (!bookmarkBtn) return;
+
+    const currentUrl = window.location.href;
+    const bookmarks = getBookmarks();
+    const isBookmarked = bookmarks.some(item => item.url === currentUrl);
+
+    const icon = bookmarkBtn.querySelector('i');
+    const text = bookmarkBtn.querySelector('.btn-text');
+
+    if (isBookmarked) {
+        if (icon) icon.className = 'fas fa-bookmark'; // Solid icon
+        if (text) text.textContent = 'Bookmarked';
+        bookmarkBtn.title = 'Remove bookmark';
+        bookmarkBtn.setAttribute('aria-pressed', 'true');
+    } else {
+        if (icon) icon.className = 'far fa-bookmark'; // Outline icon
+        if (text) text.textContent = 'Bookmark';
+        bookmarkBtn.title = 'Bookmark this series';
+        bookmarkBtn.setAttribute('aria-pressed', 'false');
+    }
+}
+
+function getBookmarks() {
+    try {
+        return JSON.parse(localStorage.getItem('mangaBookmarks_v1')) || [];
+    } catch (e) {
+        console.error("Error reading bookmarks from localStorage:", e);
+        return [];
+    }
+}
+
+function saveBookmarks(bookmarks) {
+     try {
+        localStorage.setItem('mangaBookmarks_v1', JSON.stringify(bookmarks));
+    } catch (e) {
+        console.error("Error saving bookmarks to localStorage:", e);
+        showToast("Error saving bookmark", true);
+    }
+}
+
+// Handle bookmark button clicks
+document.addEventListener('click', function(e) {
+    const bookmarkBtn = e.target.closest('.btn-bookmark');
+    if (bookmarkBtn) {
+        e.preventDefault();
+
+        const mangaTitle = document.querySelector('.manga-title-main')?.textContent.trim() || document.title;
+        const currentUrl = window.location.href;
+        const coverImg = document.querySelector('.manga-cover img')?.src || '';
+
+        let bookmarks = getBookmarks();
+        const existingIndex = bookmarks.findIndex(item => item.url === currentUrl);
+
+        if (existingIndex > -1) {
+            // Remove bookmark
+            bookmarks.splice(existingIndex, 1);
+            showToast('Bookmark removed');
+        } else {
+            // Add bookmark
+            bookmarks.push({
+                title: mangaTitle,
+                url: currentUrl,
+                cover: coverImg,
+                timestamp: new Date().toISOString()
+            });
+             // Optional: Limit number of bookmarks
+             const MAX_BOOKMARKS = 50;
+             if (bookmarks.length > MAX_BOOKMARKS) {
+                 bookmarks = bookmarks.slice(bookmarks.length - MAX_BOOKMARKS);
+             }
+            showToast('Bookmark added');
+        }
+        saveBookmarks(bookmarks);
+        updateBookmarkButtonState(); // Update button immediately
+    }
+});
+
+
+// --- Utility Functions ---
+
+// Debounce function
+function debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+        const later = () => {
+            clearTimeout(timeout);
+            func.apply(this, args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
+}
+
+// Capitalize first letter
+function capitalizeFirstLetter(string) {
+    if (!string) return '';
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+
+// Toast Notification
+function showToast(message, isError = false) {
+    let toastContainer = document.getElementById('toast-container');
+    if (!toastContainer) {
+        toastContainer = document.createElement('div');
+        toastContainer.id = 'toast-container';
+        // Simple inline styles for positioning
+        toastContainer.style.cssText = `
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 10000;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            align-items: flex-end; `;
+        document.body.appendChild(toastContainer);
+    }
+
+    const toast = document.createElement('div');
+    toast.className = 'toast-notification';
+    // Basic styles
+    toast.style.cssText = `
+        background-color: ${isError ? '#c0392b' : '#333'};
+        color: white;
+        padding: 12px 20px;
+        border-radius: var(--border-radius-sm, 6px);
+        box-shadow: var(--shadow-md, 0 5px 20px rgba(0,0,0,0.2));
+        opacity: 0;
+        transform: translateX(100%); /* Start off-screen */
+        transition: opacity 0.3s ease, transform 0.3s ease;
+        font-size: 0.9em;
+        white-space: nowrap; `;
+    toast.textContent = message;
+    toast.setAttribute('role', 'alert');
+    toast.setAttribute('aria-live', 'assertive');
+
+
+    // Add to container and animate in
+    toastContainer.appendChild(toast);
+    requestAnimationFrame(() => { // Ensure element is in DOM before animating
+        toast.style.opacity = '1';
+        toast.style.transform = 'translateX(0)';
+    });
+
+
+    // Remove after delay
+    setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateX(100%)';
+        toast.addEventListener('transitionend', () => {
+            if (toast.parentNode === toastContainer) { // Check if still attached
+                 toastContainer.removeChild(toast);
+                 // Remove container if empty
+                 if (toastContainer.children.length === 0) {
+                      document.body.removeChild(toastContainer);
+                 }
+            }
+        }, { once: true }); // Ensure event listener is removed
+    }, 3500); // 3.5 second display time
+}
+
+// --- Sample Posts (Optional - for empty blogs) ---
+/*
+function initSamplePosts() {
+    const container = document.getElementById('sample-posts-container');
+    if (!container) return;
+    console.log("Initializing sample posts display");
+
+    const sampleManga = [
+        // ... (same sample data as before) ...
+    ];
+    let samplesHTML = '';
+    sampleManga.forEach(manga => {
+        samplesHTML += `
+            <article class="thumb-item-flow force-visible"> // Ensure visible
+               // ... (HTML structure from previous version) ...
+            </article>
+        `;
+    });
+    container.innerHTML = samplesHTML; // Replace container content
+}
+*/
+
+//]]>
+    </script>
+</body>
+</html>
