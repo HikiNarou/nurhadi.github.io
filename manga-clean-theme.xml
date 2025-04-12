@@ -1,0 +1,1608 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html b:version='2' class='v2' expr:dir='data:blog.languageDirection' xmlns='http://www.w3.org/1999/xhtml' xmlns:b='http://www.google.com/2005/gml/b' xmlns:data='http://www.google.com/2005/gml/data' xmlns:expr='http://www.google.com/2005/gml/expr'>
+<head>
+    <meta charset='utf-8'/>
+    <meta content='width=device-width, initial-scale=1' name='viewport'/>
+    <title><data:blog.title/></title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&amp;family=Roboto:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+    
+    <!-- TimeAgo Library for relative time display -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/timeago.js/4.0.2/timeago.min.js"></script>
+    
+    <b:skin><![CDATA[
+    /* ==================== */
+    /* === GLOBAL RESET === */
+    /* ==================== */
+    *, *::before, *::after {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    
+    /* ====================== */
+    /* === BASE ELEMENTS === */
+    /* ====================== */
+    body {
+        font-family: 'Poppins', sans-serif;
+        background-color: #131419; /* Darker background for modern look */
+        color: #eaeaea;
+        padding-top: 60px; /* Space for fixed navbar */
+        line-height: 1.6;
+    }
+
+    a {
+        color: #4db6ff; /* Brighter blue for links */
+        text-decoration: none;
+        transition: color 0.2s ease, opacity 0.2s ease;
+    }
+    a:hover {
+        color: #79c8ff;
+    }
+
+    img {
+        max-width: 100%;
+        height: auto;
+    }
+
+    .container {
+        max-width: 1280px; /* Wider content area */
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+
+    /* ===================== */
+    /* === HEADER & NAV === */
+    /* ===================== */
+    #header {
+        background-color: rgba(25, 28, 36, 0.95); /* Semi transparent */
+        backdrop-filter: blur(10px); /* Modern blur effect */
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        padding: 0;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 1000;
+        box-shadow: 0 2px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .container_header {
+        max-width: 1280px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 20px;
+        height: 60px;
+    }
+
+    .navbar-brand {
+        font-size: 1.5em;
+        font-weight: 700;
+        color: #fff;
+        letter-spacing: 0.5px;
+        display: flex;
+        align-items: center;
+    }
+    .navbar-brand i {
+        margin-right: 8px;
+        color: #4db6ff;
+    }
+    .navbar-brand:hover {
+        color: #fff;
+        text-decoration: none;
+        opacity: 0.9;
+    }
+
+    .navbar-nav {
+        list-style: none;
+        display: flex;
+        gap: 5px;
+    }
+
+    .navbar-nav li a {
+        color: #c4c4c4;
+        padding: 8px 15px;
+        border-radius: 6px;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        transition: all 0.2s ease;
+    }
+    .navbar-nav li a:hover,
+    .navbar-nav li.active a {
+        color: #fff;
+        background-color: rgba(255, 255, 255, 0.1);
+        text-decoration: none;
+    }
+    .navbar-nav li.active a {
+        background-color: #4db6ff;
+        color: #fff;
+    }
+    .navbar-nav .fa, .navbar-nav .fas {
+        margin-right: 8px;
+    }
+    
+    /* Mobile Nav Toggle */
+    .mobile-nav-toggle {
+        display: none;
+        background: none;
+        border: none;
+        color: #fff;
+        font-size: 1.5rem;
+        cursor: pointer;
+    }
+    
+    @media (max-width: 768px) {
+        .mobile-nav-toggle {
+            display: block;
+        }
+        
+        .navbar-nav {
+            position: fixed;
+            top: 60px;
+            left: 0;
+            width: 100%;
+            flex-direction: column;
+            background-color: rgba(25, 28, 36, 0.98);
+            padding: 10px 0;
+            transform: translateY(-100%);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .navbar-nav.active {
+            transform: translateY(0);
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .navbar-nav li {
+            width: 100%;
+        }
+        
+        .navbar-nav li a {
+            padding: 12px 20px;
+            border-radius: 0;
+        }
+    }
+
+    /* ================= */
+    /* === CARD BASE === */
+    /* ================= */
+    .card {
+        background-color: #191c24; /* Darker card background */
+        border-radius: 10px; /* Rounded corners */
+        margin-bottom: 25px;
+        overflow: hidden;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    
+    .card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    }
+
+    .card-header {
+        background: linear-gradient(90deg, #232731, #1e212a); /* Gradient header */
+        padding: 15px 20px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .card-title {
+        margin: 0;
+        font-size: 1.2em;
+        font-weight: 600;
+        color: #fff;
+        display: flex;
+        align-items: center;
+    }
+    .card-title .fa, .card-title .fas {
+        margin-right: 10px;
+        color: #4db6ff;
+    }
+    
+    .view-more {
+        font-size: 0.85em;
+        color: #4db6ff;
+        display: flex;
+        align-items: center;
+    }
+    .view-more i {
+        margin-left: 5px;
+    }
+    .view-more:hover {
+        color: #79c8ff;
+        text-decoration: underline;
+    }
+
+    .card-body {
+        padding: 20px;
+    }
+
+    /* ===================== */
+    /* === MANGA GRID UI === */
+    /* ===================== */
+    .row-last-update {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px; /* Equal spacing between items */
+    }
+
+    .thumb-item-flow {
+        width: calc(25% - 15px); /* 4 columns with gap consideration */
+        background-color: #1a1e25;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        border: 1px solid rgba(255, 255, 255, 0.04);
+    }
+    
+    .thumb-item-flow:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Responsive grid */
+    @media (max-width: 1100px) {
+        .thumb-item-flow {
+            width: calc(33.333% - 14px); /* 3 columns */
+        }
+    }
+    @media (max-width: 768px) {
+        .thumb-item-flow {
+            width: calc(50% - 10px); /* 2 columns */
+        }
+    }
+    @media (max-width: 480px) {
+        .thumb-item-flow {
+            width: 100%; /* 1 column */
+        }
+    }
+
+    /* Thumbnail wrapper with aspect ratio */
+    .thumb-wrapper {
+        position: relative;
+    }
+
+    .a6-ratio {
+        position: relative;
+        width: 100%;
+        padding-bottom: 140%; /* Manga cover aspect ratio */
+        background-color: #272b36; /* Placeholder BG */
+        overflow: hidden;
+    }
+
+    .a6-ratio .content {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-size: cover;
+        background-position: center;
+        transition: transform 0.3s ease;
+    }
+    
+    .thumb-wrapper:hover .a6-ratio .content {
+        transform: scale(1.05); /* Zoom effect on hover */
+    }
+    
+    /* Placeholder image style */
+    .a6-ratio .content.placeholder {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.85em;
+        color: #8a8a8a;
+    }
+
+    /* Badge for update time */
+    .manga-badge {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+    }
+
+    .badge {
+        display: inline-block;
+        padding: 4px 10px;
+        font-size: 0.7em;
+        font-weight: 600;
+        line-height: 1;
+        color: #fff;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: baseline;
+        border-radius: 30px;
+        backdrop-filter: blur(5px);
+        letter-spacing: 0.5px;
+    }
+
+    .badge-info {
+        background-color: rgba(0, 0, 0, 0.65);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    /* Manga item details */
+    .thumb_attr {
+        padding: 12px;
+    }
+
+    /* Chapter button */
+    .chapter-title {
+        display: block;
+        background: linear-gradient(135deg, #3d8cff, #1166dd);
+        color: #fff;
+        font-size: 0.85em;
+        font-weight: 600;
+        text-align: center;
+        padding: 8px 0;
+        border-radius: 5px;
+        margin-top: 5px;
+        box-shadow: 0 3px 6px rgba(0, 102, 255, 0.2);
+    }
+    
+    .chapter-title a {
+        color: #fff;
+        display: block;
+    }
+    
+    .chapter-title a:hover {
+        text-decoration: none;
+        opacity: 0.9;
+    }
+
+    /* Series title */
+    .series-title {
+        font-size: 0.95em;
+        font-weight: 600;
+        margin-top: 10px;
+        text-align: center;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        line-height: 1.4;
+    }
+    
+    .series-title a {
+        color: #eaeaea;
+    }
+    
+    .series-title a:hover {
+        color: #fff;
+    }
+
+    /* ====================== */
+    /* === POPULAR SLIDER === */
+    /* ====================== */
+    .popular-manga-container {
+        display: flex;
+        overflow-x: auto;
+        padding-bottom: 15px;
+        scroll-behavior: smooth;
+        scrollbar-width: thin;
+        gap: 15px;
+    }
+    
+    .popular-manga-container::-webkit-scrollbar {
+        height: 6px;
+    }
+    
+    .popular-manga-container::-webkit-scrollbar-track {
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 10px;
+    }
+    
+    .popular-manga-container::-webkit-scrollbar-thumb {
+        background-color: rgba(255, 255, 255, 0.2);
+        border-radius: 10px;
+    }
+
+    .popular-thumb-item {
+        flex: 0 0 auto;
+        width: 200px;
+        background-color: #1a1e25;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+        transition: transform 0.2s ease;
+        border: 1px solid rgba(255, 255, 255, 0.04);
+    }
+    
+    .popular-thumb-item:hover {
+        transform: translateY(-5px);
+    }
+    
+    @media (max-width: 768px) {
+        .popular-thumb-item {
+            width: 160px;
+        }
+    }
+
+    /* Slider navigation buttons */
+    .slider-navigation {
+        text-align: center;
+        margin-top: 15px;
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+    }
+    
+    .slider-button {
+        background: rgba(255, 255, 255, 0.1);
+        border: none;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+    
+    .slider-button:hover {
+        background: rgba(255, 255, 255, 0.2);
+    }
+    
+    .slider-dots {
+        display: flex;
+        justify-content: center;
+        gap: 8px;
+        margin-top: 15px;
+    }
+    
+    .dot {
+        width: 8px;
+        height: 8px;
+        background-color: rgba(255, 255, 255, 0.3);
+        border-radius: 50%;
+    }
+    
+    .dot.active {
+        background-color: #4db6ff;
+        width: 25px;
+        border-radius: 10px;
+    }
+
+    /* ===================== */
+    /* === MANGA DETAILS === */
+    /* ===================== */
+    .manga-post-container {
+        background-color: #191c24;
+        padding: 25px;
+        border-radius: 10px;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        margin-bottom: 25px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Breadcrumbs */
+    .breadcrumbs {
+        margin-bottom: 20px;
+        color: #a0a0a0;
+        font-size: 0.9em;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+    }
+    
+    .breadcrumbs a {
+        color: #c4c4c4;
+    }
+    
+    .breadcrumbs a:hover {
+        color: #fff;
+    }
+    
+    .breadcrumbs span {
+        margin: 0 8px;
+        color: #666;
+    }
+
+    /* Manga Info Grid */
+    .manga-info-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 30px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        padding-bottom: 30px;
+        margin-bottom: 30px;
+    }
+
+    /* Cover column */
+    .manga-info-left {
+        flex: 0 0 230px;
+        text-align: center;
+    }
+    
+    @media (max-width: 768px) {
+        .manga-info-left {
+            flex: 1 1 100%;
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .manga-cover img {
+            max-width: 200px;
+        }
+    }
+
+    .manga-cover img {
+        width: 100%;
+        border-radius: 8px;
+        border: 2px solid rgba(255, 255, 255, 0.1);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Rating stars */
+    .manga-rating {
+        margin-top: 15px;
+    }
+    
+    .manga-rating .stars {
+        font-size: 1.4em;
+        color: #ffca28;
+        margin-bottom: 5px;
+    }
+    
+    .manga-rating .rating-text {
+        font-size: 0.85em;
+        color: #a0a0a0;
+    }
+
+    /* Details column */
+    .manga-info-right {
+        flex: 1 1 0;
+        min-width: 250px;
+    }
+
+    /* Manga title */
+    .manga-title-main {
+        font-size: 2em;
+        font-weight: 700;
+        margin-top: 0;
+        margin-bottom: 20px;
+        color: #fff;
+        line-height: 1.3;
+    }
+
+    /* Meta items */
+    .manga-meta-item {
+        margin-bottom: 15px;
+        font-size: 0.95em;
+        color: #c4c4c4;
+        display: flex;
+        align-items: flex-start;
+    }
+    
+    .manga-meta-item .meta-icon {
+        width: 20px;
+        margin-right: 10px;
+        color: #a0a0a0;
+        text-align: center;
+    }
+    
+    .manga-meta-item .meta-label {
+        font-weight: 600;
+        color: #eaeaea;
+        margin-right: 10px;
+        min-width: 100px;
+    }
+
+    /* Genre tags */
+    .manga-meta-item.genres .meta-value {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+    }
+    
+    .manga-meta-item.genres .meta-value a {
+        display: inline-block;
+        padding: 3px 10px;
+        border-radius: 20px;
+        font-size: 0.85em;
+        font-weight: 500;
+        transition: all 0.2s ease;
+        background: rgba(255, 255, 255, 0.08);
+        color: #eaeaea;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .manga-meta-item.genres .meta-value a:hover {
+        background: rgba(255, 255, 255, 0.15);
+        text-decoration: none;
+    }
+    
+    /* Genre colors */
+    .manga-meta-item.genres .meta-value a[href*='Comedy'] { background-color: rgba(52, 152, 219, 0.2); border-color: rgba(52, 152, 219, 0.4); }
+    .manga-meta-item.genres .meta-value a[href*='Drama'] { background-color: rgba(155, 89, 182, 0.2); border-color: rgba(155, 89, 182, 0.4); }
+    .manga-meta-item.genres .meta-value a[href*='Ecchi'] { background-color: rgba(241, 196, 15, 0.2); border-color: rgba(241, 196, 15, 0.4); }
+    .manga-meta-item.genres .meta-value a[href*='Romance'] { background-color: rgba(233, 30, 99, 0.2); border-color: rgba(233, 30, 99, 0.4); }
+    .manga-meta-item.genres .meta-value a[href*='Action'] { background-color: rgba(231, 76, 60, 0.2); border-color: rgba(231, 76, 60, 0.4); }
+    .manga-meta-item.genres .meta-value a[href*='Adventure'] { background-color: rgba(39, 174, 96, 0.2); border-color: rgba(39, 174, 96, 0.4); }
+
+    /* Status & Magazine badges */
+    .status-badge, .magazine-badge {
+        display: inline-block;
+        padding: 3px 12px;
+        border-radius: 20px;
+        font-size: 0.85em;
+        font-weight: 600;
+    }
+    
+    .status-badge.ongoing { 
+        background-color: rgba(46, 204, 113, 0.2);
+        color: #2ecc71;
+        border: 1px solid rgba(46, 204, 113, 0.4);
+    }
+    
+    .status-badge.completed { 
+        background-color: rgba(52, 152, 219, 0.2);
+        color: #3498db;
+        border: 1px solid rgba(52, 152, 219, 0.4);
+    }
+    
+    .magazine-badge { 
+        background-color: rgba(240, 173, 78, 0.2);
+        color: #f0ad4e;
+        border: 1px solid rgba(240, 173, 78, 0.4);
+    }
+
+    /* Action buttons */
+    .manga-actions {
+        margin-top: 25px;
+        display: flex;
+        gap: 12px;
+    }
+    
+    @media (max-width: 480px) {
+        .manga-actions {
+            flex-direction: column;
+        }
+        
+        .manga-actions .btn-action {
+            width: 100%;
+        }
+    }
+    
+    .manga-actions .btn-action {
+        padding: 10px 18px;
+        border-radius: 6px;
+        font-size: 0.95em;
+        font-weight: 600;
+        cursor: pointer;
+        text-align: center;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s ease;
+    }
+    
+    .manga-actions .btn-action .fa,
+    .manga-actions .btn-action .fas {
+        margin-right: 10px;
+    }
+    
+    .manga-actions .btn-action:hover {
+        transform: translateY(-2px);
+        text-decoration: none;
+    }
+    
+    .btn-bookmark {
+        background-color: #e74c3c;
+        color: #fff;
+        box-shadow: 0 3px 10px rgba(231, 76, 60, 0.3);
+    }
+    
+    .btn-bookmark:hover {
+        background-color: #c0392b;
+        color: #fff;
+    }
+    
+    .btn-read-latest {
+        background-color: #3498db;
+        color: #fff;
+        box-shadow: 0 3px 10px rgba(52, 152, 219, 0.3);
+    }
+    
+    .btn-read-latest:hover {
+        background-color: #2980b9;
+        color: #fff;
+    }
+
+    /* Description section */
+    .manga-description-section {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        padding-bottom: 30px;
+        margin-bottom: 30px;
+    }
+    
+    .manga-description-section h3,
+    .manga-chapters-section h3 {
+        font-size: 1.4em;
+        margin-top: 0;
+        margin-bottom: 15px;
+        color: #fff;
+        font-weight: 600;
+    }
+    
+    .manga-description-content {
+        color: #c4c4c4;
+        font-size: 0.95em;
+        line-height: 1.7;
+    }
+
+    /* Chapter list */
+    #chapter-list-container {
+        max-height: 400px;
+        overflow-y: auto;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 8px;
+        background-color: #1a1e25;
+        scrollbar-width: thin;
+        scrollbar-color: rgba(255, 255, 255, 0.2) rgba(255, 255, 255, 0.05);
+    }
+    
+    #chapter-list-container::-webkit-scrollbar {
+        width: 6px;
+    }
+    
+    #chapter-list-container::-webkit-scrollbar-track {
+        background: rgba(255, 255, 255, 0.05);
+    }
+    
+    #chapter-list-container::-webkit-scrollbar-thumb {
+        background-color: rgba(255, 255, 255, 0.2);
+        border-radius: 10px;
+    }
+    
+    #chapter-list-container ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+    
+    #chapter-list-container li {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 12px 18px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        transition: background-color 0.2s ease;
+    }
+    
+    #chapter-list-container li:hover {
+        background-color: rgba(255, 255, 255, 0.05);
+    }
+    
+    #chapter-list-container li:last-child {
+        border-bottom: none;
+    }
+    
+    #chapter-list-container li:nth-child(even) {
+        background-color: rgba(0, 0, 0, 0.15);
+    }
+    
+    #chapter-list-container li:nth-child(even):hover {
+        background-color: rgba(255, 255, 255, 0.05);
+    }
+    
+    #chapter-list-container li a {
+        color: #d4d4d4;
+        text-decoration: none;
+        font-weight: 500;
+        font-size: 0.95em;
+        transition: color 0.2s ease;
+    }
+    
+    #chapter-list-container li a:hover {
+        color: #fff;
+    }
+    
+    #chapter-list-container li .chapter-time {
+        font-size: 0.85em;
+        color: #888;
+        white-space: nowrap;
+        margin-left: 15px;
+    }
+
+    /* Hidden metadata */
+    .manga-hidden-meta {
+        display: none;
+    }
+
+    /* ================== */
+    /* === FOOTER UI === */
+    /* ================== */
+    .footer {
+        background: linear-gradient(to right, #1a1e25, #151821);
+        padding: 35px 20px;
+        text-align: center;
+        margin-top: 40px;
+        border-top: 1px solid rgba(255, 255, 255, 0.05);
+        color: #a0a0a0;
+    }
+    
+    .footer-content {
+        max-width: 1280px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 30px;
+    }
+    
+    .footer-column {
+        flex: 1 1 250px;
+        text-align: left;
+    }
+    
+    .footer-column h4 {
+        color: #fff;
+        margin-bottom: 15px;
+        font-size: 1.1em;
+        font-weight: 600;
+        position: relative;
+        padding-bottom: 10px;
+    }
+    
+    .footer-column h4:after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 40px;
+        height: 3px;
+        background: #4db6ff;
+        border-radius: 3px;
+    }
+    
+    .footer-column ul {
+        list-style: none;
+        padding: 0;
+    }
+    
+    .footer-column ul li {
+        margin-bottom: 8px;
+    }
+    
+    .footer-column ul li a {
+        color: #a0a0a0;
+        font-size: 0.9em;
+        transition: color 0.2s ease;
+        display: inline-block;
+    }
+    
+    .footer-column ul li a:hover {
+        color: #fff;
+        text-decoration: none;
+        transform: translateX(3px);
+    }
+    
+    .footer-column .social-icons {
+        display: flex;
+        gap: 10px;
+    }
+    
+    .footer-column .social-icons a {
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        background-color: rgba(255, 255, 255, 0.1);
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s ease;
+    }
+    
+    .footer-column .social-icons a:hover {
+        background-color: #4db6ff;
+        transform: translateY(-3px);
+    }
+    
+    .footer-bottom {
+        margin-top: 35px;
+        padding-top: 20px;
+        border-top: 1px solid rgba(255, 255, 255, 0.05);
+        text-align: center;
+        font-size: 0.85em;
+        color: #888;
+    }
+    
+    .footer-bottom a {
+        color: #a0a0a0;
+    }
+
+    /* ======================== */
+    /* === BLOG PAGINATION === */
+    /* ======================== */
+    .blog-pager {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        margin: 30px 0;
+        align-items: center;
+    }
+    
+    .blog-pager a {
+        padding: 8px 16px;
+        background-color: rgba(255, 255, 255, 0.1);
+        color: #eaeaea;
+        border-radius: 6px;
+        font-size: 0.9em;
+        font-weight: 500;
+        transition: all 0.2s ease;
+        display: inline-flex;
+        align-items: center;
+    }
+    
+    .blog-pager a:hover {
+        background-color: rgba(255, 255, 255, 0.15);
+        color: #fff;
+        text-decoration: none;
+        transform: translateY(-2px);
+    }
+    
+    .blog-pager .fa-arrow-left {
+        margin-right: 8px;
+    }
+    
+    .blog-pager .fa-arrow-right {
+        margin-left: 8px;
+    }
+    
+    /* === COMMENTS === */
+    .comments {
+        background-color: #191c24;
+        padding: 25px;
+        border-radius: 10px;
+        margin-top: 25px;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    
+    .comments h4 {
+        color: #fff;
+        margin-top: 0;
+        margin-bottom: 20px;
+        font-size: 1.3em;
+        font-weight: 600;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        padding-bottom: 10px;
+    }
+    
+    .comment {
+        margin-bottom: 20px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    
+    .comment:last-child {
+        border-bottom: none;
+        margin-bottom: 0;
+        padding-bottom: 0;
+    }
+    
+    .comment-header {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+    }
+    
+    .comment-author {
+        font-weight: 600;
+        color: #eaeaea;
+    }
+    
+    .comment-timestamp {
+        font-size: 0.85em;
+        color: #888;
+    }
+    
+    .comment-content {
+        color: #c4c4c4;
+        font-size: 0.95em;
+        line-height: 1.5;
+    }
+    
+    /* === SEARCH BAR === */
+    .search-bar {
+        margin-bottom: 25px;
+    }
+    
+    .search-container {
+        background-color: #191c24;
+        border-radius: 30px;
+        display: flex;
+        align-items: center;
+        padding: 5px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        max-width: 500px;
+        margin: 0 auto;
+        transition: all 0.3s ease;
+    }
+    
+    .search-container:focus-within {
+        border-color: #4db6ff;
+        box-shadow: 0 0 0 3px rgba(77, 182, 255, 0.15);
+    }
+    
+    .search-container input[type="text"] {
+        flex: 1;
+        background: transparent;
+        border: none;
+        padding: 10px 15px;
+        font-size: 0.95em;
+        color: #fff;
+        outline: none;
+    }
+    
+    .search-container button {
+        background: #4db6ff;
+        color: #fff;
+        border: none;
+        border-radius: 25px;
+        padding: 10px 20px;
+        font-size: 0.9em;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+    }
+    
+    .search-container button:hover {
+        background-color: #2a9bff;
+    }
+    
+    /* Search results highlight */
+    .search-highlight {
+        background-color: rgba(77, 182, 255, 0.15);
+        padding: 0 2px;
+    }
+    
+    /* === HELPER CLASSES === */
+    .text-center { text-align: center; }
+    .mb-20 { margin-bottom: 20px; }
+    .mt-30 { margin-top: 30px; }
+    
+    /* === LOADING ANIMATIONS === */
+    .loading-spinner {
+        width: 40px;
+        height: 40px;
+        border: 3px solid rgba(255, 255, 255, 0.1);
+        border-radius: 50%;
+        border-top-color: #4db6ff;
+        animation: spin 1s linear infinite;
+        margin: 20px auto;
+    }
+    
+    @keyframes spin {
+        to { transform: rotate(360deg); }
+    }
+    
+    .pulse {
+        animation: pulse 1.5s infinite;
+    }
+    
+    @keyframes pulse {
+        0% { opacity: 0.5; }
+        50% { opacity: 1; }
+        100% { opacity: 0.5; }
+    }
+    ]]></b:skin>
+</head>
+
+<body>
+    <!-- Header/Navbar -->
+    <div id='header' class='navbar navbar-inverse'>
+        <div class='container_header'>
+            <a expr:href='data:blog.homepageUrl' class='navbar-brand'>
+                <i class="fas fa-book-reader"></i>
+                <data:blog.title/>
+            </a>
+            
+            <!-- Mobile Nav Toggle -->
+            <button class="mobile-nav-toggle" aria-label="Toggle Navigation">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <!-- Navigation -->
+            <ul class='navbar-nav' id="main-nav">
+                <li class='active'><a href='/'><i class='fas fa-home'></i> Home</a></li>
+                <li><a href='/search/label/Manga'><i class='fas fa-list'></i> Manga List</a></li>
+                <li><a href='#'><i class='fas fa-history'></i> History</a></li>
+                <li><a href='/search/label/Genres'><i class='fas fa-tags'></i> Genres</a></li>
+                <li><a href='/search'><i class='fas fa-search'></i> Search</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class='container' id='content'>
+        <!-- Optional Search Bar for Homepage -->
+        <b:if cond='data:blog.pageType == "index"'>
+            <div class='search-bar'>
+                <form action='/search' class='search-container'>
+                    <input type='text' name='q' placeholder='Search for manga...' required='required'/>
+                    <button type='submit'><i class="fas fa-search"></i> Search</button>
+                </form>
+            </div>
+        </b:if>
+        
+        <!-- Main Content -->
+        <b:section class='main' id='main' showaddelement='yes'>
+            <b:widget id='Blog1' locked='true' title='Blog Posts' type='Blog' version='1'>
+                <b:includable id='main' var='top'>
+                    <!-- Blog Main Content -->
+                    <b:if cond='data:blog.pageType == "index"'>
+                        <!-- Homepage Content -->
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title"><i class="fas fa-fire"></i> POPULAR MANGA</h3>
+                                <a href="/search/label/Popular" class="view-more">View More <i class="fas fa-angle-right"></i></a>
+                            </div>
+                            <div class="card-body">
+                                <!-- Wrapper for slider items -->
+                                <div class="popular-manga-container" id="popular-slider">
+                                    <!-- Items will be populated dynamically by Blogger posts -->
+                                </div>
+                                
+                                <!-- Slider navigation -->
+                                <div class="slider-navigation">
+                                    <button class="slider-button prev-button" aria-label="Previous">
+                                        <i class="fas fa-chevron-left"></i>
+                                    </button>
+                                    <div class="slider-dots">
+                                        <span class="dot active"></span>
+                                        <span class="dot"></span>
+                                        <span class="dot"></span>
+                                    </div>
+                                    <button class="slider-button next-button" aria-label="Next">
+                                        <i class="fas fa-chevron-right"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- New Manga Updated Section -->
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title"><i class="fas fa-newspaper"></i> NEW MANGA UPDATED</h3>
+                                <a href="/search/label/Updated" class="view-more">View More <i class="fas fa-angle-right"></i></a>
+                            </div>
+                            <div class="card-body">
+                                <div class="row-last-update">
+                                    <!-- Loop through posts -->
+                                    <b:loop values='data:posts' var='post'>
+                                        <div class="thumb-item-flow">
+                                            <div class="thumb-wrapper">
+                                                <a expr:href='data:post.url'>
+                                                    <div class="a6-ratio">
+                                                        <b:if cond='data:post.firstImageUrl'>
+                                                            <div class="content" expr:style='"background-image: url(" + data:post.firstImageUrl + ");"'></div>
+                                                        <b:else/>
+                                                            <div class="content placeholder"><i class="fas fa-image"></i> No Image</div>
+                                                        </b:if>
+                                                    </div>
+                                                </a>
+                                                <div class="manga-badge">
+                                                    <span class="badge badge-info">
+                                                        <i class="far fa-clock"></i> <data:post.timestampLabel/>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="thumb_attr">
+                                                <div class="chapter-title">
+                                                    <a expr:href='data:post.url'>
+                                                        <b:if cond='data:post.title contains " - Chapter "'>
+                                                            Chapter <b:eval expr='data:post.title.split(" - Chapter ")[1]'/>
+                                                        <b:else/>
+                                                            Latest Chapter
+                                                        </b:if>
+                                                    </a>
+                                                </div>
+                                                <div class="series-title">
+                                                    <a expr:href='data:post.url' expr:title='data:post.title'>
+                                                        <b:if cond='data:post.title contains " - Chapter "'>
+                                                            <b:eval expr='data:post.title.split(" - Chapter ")[0]'/>
+                                                        <b:else/>
+                                                            <data:post.title/>
+                                                        </b:if>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </b:loop>
+                                    
+                                    <!-- If no posts, show loading message -->
+                                    <b:if cond='!data:posts.any()'>
+                                        <div class="text-center" style="width: 100%; padding: 30px 0;">
+                                            <div class="loading-spinner"></div>
+                                            <p>Loading manga content or no posts available yet...</p>
+                                        </div>
+                                    </b:if>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- New Manga Post Section -->
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title"><i class="fas fa-plus-circle"></i> NEW MANGA ADDED</h3>
+                                <a href="/search/label/New" class="view-more">View More <i class="fas fa-angle-right"></i></a>
+                            </div>
+                            <div class="card-body">
+                                <div class="row-last-update">
+                                    <div class="text-center" style="width: 100%; padding: 30px 0;">
+                                        <p>New manga titles will appear here</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Pagination -->
+                        <b:include name='nextprev'/>
+                        
+                    <b:else/>
+                        <!-- Single Post Page -->
+                        <b:if cond='data:blog.pageType == "item"'>
+                            <b:loop values='data:posts' var='post'>
+                                <b:include data='post' name='post'/>
+                            </b:loop>
+                        <b:else/>
+                            <!-- Archive/Search Pages -->
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="card-title">
+                                        <b:if cond='data:blog.searchQuery'>
+                                            <i class="fas fa-search"></i> Search Results: <data:blog.searchQuery/>
+                                        <b:elseif cond='data:blog.pageType == "archive"'/>
+                                            <i class="fas fa-calendar"></i> Archive: <data:blog.pageName/>
+                                        <b:elseif cond='data:blog.pageType == "label"'/>
+                                            <i class="fas fa-tag"></i> Category: <data:blog.pageName/>
+                                        <b:else/>
+                                            <i class="fas fa-folder"></i> <data:blog.pageName/>
+                                        </b:if>
+                                    </h3>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row-last-update">
+                                        <b:loop values='data:posts' var='post'>
+                                            <div class="thumb-item-flow">
+                                                <div class="thumb-wrapper">
+                                                    <a expr:href='data:post.url'>
+                                                        <div class="a6-ratio">
+                                                            <b:if cond='data:post.firstImageUrl'>
+                                                                <div class="content" expr:style='"background-image: url(" + data:post.firstImageUrl + ");"'></div>
+                                                            <b:else/>
+                                                                <div class="content placeholder"><i class="fas fa-image"></i> No Image</div>
+                                                            </b:if>
+                                                        </div>
+                                                    </a>
+                                                    <div class="manga-badge">
+                                                        <span class="badge badge-info">
+                                                            <i class="far fa-clock"></i> <data:post.timestampLabel/>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div class="thumb_attr">
+                                                    <div class="chapter-title">
+                                                        <a expr:href='data:post.url'>
+                                                            <b:if cond='data:post.title contains " - Chapter "'>
+                                                                Chapter <b:eval expr='data:post.title.split(" - Chapter ")[1]'/>
+                                                            <b:else/>
+                                                                Latest Chapter
+                                                            </b:if>
+                                                        </a>
+                                                    </div>
+                                                    <div class="series-title">
+                                                        <a expr:href='data:post.url' expr:title='data:post.title'>
+                                                            <b:if cond='data:post.title contains " - Chapter "'>
+                                                                <b:eval expr='data:post.title.split(" - Chapter ")[0]'/>
+                                                            <b:else/>
+                                                                <data:post.title/>
+                                                            </b:if>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </b:loop>
+                                        
+                                        <!-- If no posts, show message -->
+                                        <b:if cond='!data:posts.any()'>
+                                            <div class="text-center" style="width: 100%; padding: 30px 0;">
+                                                <p>No content found matching your criteria</p>
+                                            </div>
+                                        </b:if>
+                                    </div>
+                                    
+                                    <!-- Pagination for archive/label pages -->
+                                    <b:include name='nextprev'/>
+                                </div>
+                            </div>
+                        </b:if>
+                    </b:if>
+                </b:includable>
+
+                <!-- Single Post Template -->
+                <b:includable id='post' var='post'>
+                  <div class='manga-post-container'>
+
+                    <!-- Breadcrumbs -->
+                    <div class='breadcrumbs'>
+                      <a expr:href='data:blog.homepageUrl'><i class='fas fa-home'/> Home</a>
+                      <span>/</span>
+                      <a href='/search/label/Manga'>Manga List</a>
+                      <span>/</span>
+                      <b:if cond='data:post.title contains " - Chapter "'>
+                         <b:eval expr='data:post.title.split(" - Chapter ")[0]'/>
+                      <b:else/>
+                         <data:post.title/>
+                      </b:if>
+                    </div>
+
+                    <!-- Info Grid -->
+                    <div class='manga-info-grid'>
+                      <!-- Kolom Kiri: Cover & Rating -->
+                      <div class='manga-info-left'>
+                        <div class='manga-cover'>
+                           <b:with value='data:post.firstImageUrl ?: "https://via.placeholder.com/230x320?text=No+Cover"' var='imageUrl'>
+                                <img expr:alt='data:post.title' expr:src='data:imageUrl'/>
+                           </b:with>
+                        </div>
+                        <div class='manga-rating'>
+                           <div class='stars'>
+                               <i class='fas fa-star'/><i class='fas fa-star'/><i class='fas fa-star'/><i class='fas fa-star'/><i class='far fa-star'/>
+                           </div>
+                           <div class='rating-text'>Rating based on reader reviews</div>
+                        </div>
+                      </div>
+
+                      <!-- Kolom Kanan: Detail Meta -->
+                      <div class='manga-info-right'>
+                        <h1 class='manga-title-main'>
+                            <!-- Tampilkan judul tanpa chapter -->
+                            <b:if cond='data:post.title contains " - Chapter "'>
+                               <b:eval expr='data:post.title.split(" - Chapter ")[0]'/>
+                            <b:else/>
+                               <data:post.title/>
+                            </b:if>
+                        </h1>
+
+                        <!-- Meta Items - Data diambil dari elemen tersembunyi di post body -->
+                        <div class='manga-meta-item other-names'>
+                            <span class='meta-icon'><i class='far fa-flag'/></span>
+                            <span class='meta-label'>Other names:</span>
+                            <span class='meta-value'>
+                                <!-- This will be filled by JavaScript -->
+                                <i class="pulse">Loading...</i>
+                            </span>
+                        </div>
+                        <div class='manga-meta-item author'>
+                            <span class='meta-icon'><i class='fas fa-user-edit'/></span>
+                            <span class='meta-label'>Author(s):</span>
+                            <span class='meta-value'>
+                                <!-- This will be filled by JavaScript -->
+                                <i class="pulse">Loading...</i>
+                            </span>
+                        </div>
+                        <div class='manga-meta-item genres'>
+                            <span class='meta-icon'><i class='fas fa-tags'/></span>
+                            <span class='meta-label'>Genre(s):</span>
+                            <span class='meta-value'>
+                                <b:if cond='data:post.labels'>
+                                    <b:loop values='data:post.labels' var='label'>
+                                        <a expr:href='data:label.url' rel='tag'><data:label.name/></a>
+                                    </b:loop>
+                                <b:else/>
+                                    No genres specified
+                                </b:if>
+                            </span>
+                        </div>
+                        <div class='manga-meta-item status'>
+                            <span class='meta-icon'><i class='fas fa-signal'/></span>
+                            <span class='meta-label'>Status:</span>
+                            <span class='meta-value'>
+                                <!-- This will be filled by JavaScript -->
+                                <i class="pulse">Loading...</i>
+                            </span>
+                        </div>
+                        <div class='manga-meta-item magazine'>
+                            <span class='meta-icon'><i class='fas fa-book-open'/></span>
+                            <span class='meta-label'>Magazine:</span>
+                            <span class='meta-value'>
+                                <!-- This will be filled by JavaScript -->
+                                <i class="pulse">Loading...</i>
+                            </span>
+                        </div>
+                        <div class='manga-meta-item views'>
+                            <span class='meta-icon'><i class='fas fa-eye'/></span>
+                            <span class='meta-label'>Views:</span>
+                            <span class='meta-value'>
+                                <!-- Placeholder - This would need a view counter script -->
+                                <span id="post-view-counter">0</span>
+                            </span>
+                        </div>
+
+                        <!-- Tombol Aksi -->
+                        <div class='manga-actions'>
+                            <a class='btn-action btn-bookmark' href='#' title='Bookmark'>
+                                <i class='far fa-bookmark'/> Bookmark
+                            </a>
+                            <a class='btn-action btn-read-latest' href='#' title='Read the latest chapter'>
+                                <i class='fas fa-book-reader'/> Read Latest
+                            </a>
+                        </div>
+
+                      </div> <!-- Akhir Kolom Kanan -->
+                    </div> <!-- Akhir Info Grid -->
+
+
+                    <!-- Description Section -->
+                     <div class='manga-description-section'>
+                         <h3><i class="fas fa-info-circle"></i> Description</h3>
+                         <div class='manga-description-content'>
+                             <!-- Konten utama dari post body akan muncul di sini -->
+                             <data:post.body/>
+                         </div>
+                     </div>
+
+
+                    <!-- Chapters Section -->
+                    <div class='manga-chapters-section'>
+                       <h3><i class="fas fa-list"></i> Chapters</h3>
+                       <!-- Container untuk daftar chapter yang akan diisi JS -->
+                        <div id='chapter-list-container'>
+                            <div class="text-center" style="padding: 30px 0;">
+                                <div class="loading-spinner"></div>
+                                <p>Loading chapter list...</p>
+                            </div>
+                        </div>
+                    </div>
+
+                     <!-- Data Meta Tersembunyi (Untuk diambil JS) -->
+                     <div class='manga-hidden-meta'>
+                         <div class='manga-meta-manga-label'><!-- Manga unique label --></div>
+                         <div class='manga-meta-other-names'><!-- Alternative titles --></div>
+                         <div class='manga-meta-author'><!-- Author name --></div>
+                         <div class='manga-meta-status'><!-- ongoing/completed --></div>
+                         <div class='manga-meta-magazine'><!-- Magazine or publisher --></div>
+                     </div>
+
+                  </div> <!-- Akhir manga-post-container -->
+
+                  <!-- Panggil includable komentar jika perlu -->
+                  <b:include data='post' name='comments'/>
+                </b:includable>
+                
+                <!-- Other includables here -->
+                <b:includable id='nextprev'>
+                  <div class='blog-pager' id='blog-pager'>
+                    <b:if cond='data:newerPageUrl'>
+                      <a expr:href='data:newerPageUrl' expr:title='data:newerPageTitle'>
+                        <i class='fas fa-arrow-left'></i> Newer Posts
+                      </a>
+                    </b:if>
+                    
+                    <a expr:href='data:blog.homepageUrl'>
+                      <i class='fas fa-home'></i> Home
+                    </a>
+                    
+                    <b:if cond='data:olderPageUrl'>
+                      <a expr:href='data:olderPageUrl' expr:title='data:olderPageTitle'>
+                        Older Posts <i class='fas fa-arrow-right'></i>
+                      </a>
+                    </b:if>
+                  </div>
+                </b:includable>
+                
+                <b:includable id='comments' var='post'>
+                  <div class='comments'>
+                    <b:if cond='data:post.allowComments'>
+                      <h4><i class="fas fa-comments"></i> Comments</h4>
+                      <div class='comment-form'>
+                        <b:include data='post' name='commentForm'/>
+                      </div>
+                      <div class='comment-thread'>
+                        <b:include data='post' name='commentList'/>
+                      </div>
+                    </b:if>
+                  </div>
+                </b:includable>
+                
+                <!-- Additional includables required by Blogger -->
+                <b:includable id='commentForm' var='post'>
+                  <div class='comment-form'>
+                    <b:if cond='data:mobile'>
+                      <h4 id='comment-post-message'>
+                        <a expr:id='data:widget.instanceId + "_comment-editor-toggle-link"' href='javascript:void(0)'>Write a comment</a>
+                      </h4>
+                    </b:if>
+                    <div class='comment-form-container'>
+                      <b:include data='post' name='commentFormIframeSrc'/>
+                      <iframe allowtransparency='allowtransparency' class='blogger-iframe-colorize blogger-comment-from-post' expr:height='data:cmtIframeInitialHeight' frameborder='0' id='comment-editor' name='comment-editor' src='' width='100%'/>
+                    </div>
+                  </div>
+                </b:includable>
+                
+                <b:includable id='commentFormIframeSrc' var='post'>
+                  <a expr:href='data:post.commentFormIframeSrc' id='comment-editor-src'/>
+                </b:includable>
+                
+                <b:includable id='commentList' var='post'>
+                  <b:if cond='data:post.comments'>
+                    <div id='comments-block'>
+                      <b:loop values='data:post.comments' var='comment'>
+                        <div class='comment' expr:id='"comment-" + data:comment.id'>
+                          <div class='comment-header'>
+                            <div class='comment-author'>
+                              <a expr:href='data:comment.authorUrl' rel='nofollow'>
+                                <data:comment.author/>
+                              </a>
+                            </div>
+                            <div class='comment-timestamp'>
+                              <a expr:href='"#comment-" + data:comment.id' title='Comment permalink'>
+                                <data:comment.timestamp/>
+                              </a>
+                            </div>
+                          </div>
+                          <div class='comment-content'>
+                            <b:if cond='data:comment.isDeleted'>
+                              <span class='comment-deleted'>[Deleted Comment]</span>
+                            <b:else/>
+                              <data:comment.body/>
+                            </b:if>
+                          </div>
+                        </div>
+                      </b:loop>
+                    </div>
+                  <b:else/>
+                    <p class='text-center'>No comments yet. Be the first to share your thoughts!</p>
+                  </b:if>
+                </b:includable>
+            </b:widget>
+        </b:section>
+    </div> <!-- End Container -->
+
+    <!-- Footer with multiple columns -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-column">
+                <h4>About Us</h4>
+                <p>Your manga reading platform for the latest manga chapters with high-quality scans and translations.</p>
+                <div class="social-icons mt-30">
+                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" aria-label="Discord"><i class="fab fa-discord"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-column">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="/"><i class="fas fa-angle-right"></i> Home</a></li>
+                    <li><a href="/search/label/Manga"><i class="fas fa-angle-right"></i> Manga List</a></li>
+                    <li><a href="/search/label/Popular"><i class="fas fa-angle-right"></i> Popular Manga</a></li>
+                    <li><a href="/search/label/Updated"><i class="fas fa-angle-right"></i> Latest Updates</a></li>
+                    <li><a href="/search/label/Genres"><i class="fas fa-angle-right"></i> Browse by Genre</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h4>Top Genres</h4>
+                <ul>
+                    <li><a href="/search/
